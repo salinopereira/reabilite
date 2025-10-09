@@ -1,3 +1,37 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1cc7a7eebe0c2fdc286c30452d980b63973aea85b70716a21fb1d075cd85ddf5
-size 377
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# Firebase
+.firebase/

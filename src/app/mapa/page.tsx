@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:909e0b15810949036ce2a0084954445136a6bf74000e2a2f6ec27733e2faebec
-size 575
+'use client';
+
+import dynamic from 'next/dynamic';
+
+// Carrega dinamicamente o componente do mapa, desativando o SSR.
+const ClientMap = dynamic(() => import('@/components/ClientMap'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <span className="ml-2">Carregando componente do mapa...</span>
+    </div>
+  )
+});
+
+export default function MapPage() {
+  return <ClientMap />;
+}

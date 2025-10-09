@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2b48ceb62c730d4da347ae8c818825ee4b4032e123ae78f7f724160d17ea924d
-size 303
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <rect width="100%" height="100%" fill="#e2e8f0" />
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="30px" fill="#94a3b8">Imagem Benefícios</text>
+</svg>

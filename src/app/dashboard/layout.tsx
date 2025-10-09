@@ -1,3 +1,29 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5213cf6dffb7dc5397ad2b83244821e33dd7d7d70fcd4901ce7a59baf93063b7
-size 694
+'use client';
+
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/lib/firebase/config';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
+const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+  const [user, loading] = useAuthState(auth);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
+    return <div>Carregando...</div>; // Ou um spinner de carregamento
+  }
+
+  if (!user) {
+    return null; // Ou uma página de acesso negado
+  }
+
+  return <>{children}</>;
+};
+
+export default DashboardLayout;

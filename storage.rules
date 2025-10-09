@@ -1,3 +1,30 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3efc917fde965c6d6fd234d5b4194fc3de9306c494c1b7f3dd09058b96636301
-size 1054
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Regra geral: Apenas usuários autenticados podem interagir com o Storage.
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Pasta de imagens de perfil
+    match /profile_images/{userId}/{fileName} {
+
+      // Permite leitura de qualquer imagem de perfil, pois elas são públicas.
+      allow read;
+
+      // Permite escrita (upload, atualização, exclusão) apenas se o usuário
+      // autenticado for o dono do perfil (o `userId` da pasta).
+      allow write: if isSignedIn() && request.auth.uid == userId;
+
+      // Validações adicionais para o upload:
+      // - Garante que o arquivo seja uma imagem (jpeg, png, jpg).
+      // - Garante que o tamanho do arquivo seja no máximo 5MB.
+      allow create: if isSignedIn() && 
+                      request.auth.uid == userId &&
+                      request.resource.size < 5 * 1024 * 1024 &&
+                      request.resource.contentType.matches('image/(jpeg|png|jpg)');
+    }
+  }
+}

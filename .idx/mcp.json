@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e8f86c97dd69204605eb86f44b90354691a9c258747bf19bc8170258f03d5652
-size 225
+{
+    "mcpServers": {
+        "firebase": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "firebase-tools@latest",
+                "experimental:mcp"
+            ]
+        }
+    }
+}

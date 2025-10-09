@@ -1,3 +1,45 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:af5120d8bc6362ab9c9f0d8c9baab7937ab6c9b309dc9fc51ff409c7ec18f67b
-size 1464
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Home, MessageCircle, Users, Settings } from 'lucide-react';
+
+const navLinks = [
+  { href: '/feed/dashboard/feed', icon: Home, label: 'Feed' },
+  { href: '/feed/dashboard/chats', icon: MessageCircle, label: 'Chats' },
+  { href: '/feed/dashboard/encontrar', icon: Users, label: 'Encontrar' },
+  { href: '/feed/dashboard/consultas', icon: Settings, label: 'Consultas' },
+];
+
+const Sidebar = () => {
+  const pathname = usePathname();
+
+  return (
+    <aside className="w-64 bg-dark/30 p-4 flex flex-col justify-between">
+      <div>
+        <h1 className="text-2xl font-bold text-white mb-8">Reabilite Pro</h1>
+        <nav className="flex flex-col space-y-2">
+          {navLinks.map((link) => {
+            const isActive = pathname.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
+                  isActive ? 'bg-primary text-white' : 'text-light/80 hover:bg-dark/50'
+                }`}>
+                <link.icon size={20} />
+                <span>{link.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+      <div className="mt-auto">
+        {/* User profile section can be added here */}
+      </div>
+    </aside>
+  );
+};
+
+export default Sidebar;

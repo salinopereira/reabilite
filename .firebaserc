@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c8b3fbcf6515b847a5515b7ed42655befaafd8cd0a782cfbafc6afffbf0d5a7f
-size 53
+{
+  "projects": {},
+  "targets": {},
+  "etags": {}
+}

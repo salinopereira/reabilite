@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:bf82b8c40d5770ab18df682504db6b70ccda91237147d230c69e65f69450362a
-size 306
+import React from 'react';
+
+const Header = () => {
+  return (
+    <header className="bg-white shadow">
+      <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold text-gray-900">Reabilite Pro</h1>
+      </div>
+    </header>
+  );
+};
+
+export default Header;

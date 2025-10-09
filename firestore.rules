@@ -1,3 +1,50 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:843fac61d71d95667198e84bc7193ef7471a61719dd9cea6cec51d198bc00738
-size 2173
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Regras para a coleção 'users'
+    match /users/{userId} {
+      // Qualquer usuário autenticado pode criar seu próprio perfil.
+      allow create: if request.auth != null && request.auth.uid == userId;
+
+      // O usuário só pode ler e atualizar seu próprio documento.
+      allow read, update: if request.auth != null && request.auth.uid == userId;
+
+      // Permite que outros usuários autenticados leiam perfis, mas apenas campos públicos.
+      allow get: if request.auth != null;
+    }
+
+    // Regras para a coleção 'consultations'
+    match /consultations/{consultationId} {
+      // Um paciente autenticado pode criar uma consulta.
+      allow create: if request.auth != null && request.resource.data.patientId == request.auth.uid;
+
+      // Apenas o paciente ou o profissional envolvido podem ler a consulta.
+      allow read: if request.auth != null && (request.resource.data.patientId == request.auth.uid || request.resource.data.professionalId == request.auth.uid);
+
+      // Apenas o profissional pode atualizar o status da consulta (aceitar/recusar).
+      allow update: if request.auth != null && request.resource.data.professionalId == request.auth.uid;
+    }
+
+    // Regras para a coleção 'avaliacoes'
+    match /avaliacoes/{avaliacaoId} {
+        // Um paciente autenticado pode criar uma avaliação.
+        // Adicionar lógica para verificar se o paciente teve uma consulta com o profissional.
+        allow create: if request.auth != null && request.resource.data.pacienteId == request.auth.uid;
+
+        // Qualquer usuário autenticado pode ler as avaliações.
+        allow read: if request.auth != null;
+    }
+
+    // Regras para outras coleções (posts, chats, etc.) podem ser adicionadas aqui.
+    match /posts/{postId} {
+      allow read: if request.auth != null;
+      allow create, update: if request.auth != null && request.resource.data.authorId == request.auth.uid;
+    }
+
+     match /chats/{chatId} {
+        allow read, create, update: if request.auth != null && request.auth.uid in resource.data.participants;
+     }
+  }
+}

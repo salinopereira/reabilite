@@ -1,3 +1,29 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3f34161775a91bb8b33829ddf67efa5306c11a25e613581223ccc2d912a575a4
-size 994
+'use client';
+
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
+import { auth, db } from '@/lib/firebase/config';
+import { doc } from 'firebase/firestore';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
+const DashboardPage = () => {
+  const [user, loading] = useAuthState(auth);
+  const router = useRouter();
+  const userDocRef = user ? doc(db, 'users', user.uid) : null;
+  const [userData, userLoading] = useDocumentData(userDocRef);
+
+  useEffect(() => {
+    if (!loading && !userLoading && userData) {
+      if (userData.type === 'paciente') {
+        router.push('/dashboard/patient');
+      } else if (userData.type === 'profissional') {
+        router.push('/dashboard/professional');
+      }
+    }
+  }, [user, loading, userData, userLoading, router]);
+
+  return <div>Carregando dashboard...</div>; // Pode mostrar um loader enquanto redireciona
+};
+
+export default DashboardPage;

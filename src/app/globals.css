@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:072fe970bade45b7b4b6dedfd326358e10f2d74fcad443281e53232dabadc74c
-size 749
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --dark: #111;
+    --light: #f8f8f8;
+    --primary: #007BFF; /* Example: Bright Blue */
+    --secondary: #6C757D; /* Example: Muted Gray */
+  }
+}
+
+body {
+  @apply bg-dark text-light;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0), url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-size: auto, 100%;
+  background-blend-mode: overlay;
+}
