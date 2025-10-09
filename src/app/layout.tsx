@@ -1,3 +1,27 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8554125c119761b0d0d71d8061745c374b6d4e396e6ecb7904ca08797f09628b
-size 547
+
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+
+export const dynamic = 'force-dynamic';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
+  title: 'Reabilite Pro',
+  description: 'Sua plataforma completa para gestão de fisioterapia',
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="pt-BR">
+      <body className={`${inter.className} bg-gray-900 text-gray-200`}>
+          {children}
+      </body>
+    </html>
+  );
+}
