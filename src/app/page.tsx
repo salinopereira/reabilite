@@ -1,102 +1,74 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from 'react';
+
+export default function HomePage() {
+  const [message, setMessage] = useState('');
+
+  const fetchData = async () => {
+    const res = await fetch('/api/hello');
+    const data = await res.json();
+    setMessage(data.Hello);
+  };
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="bg-gray-50 text-gray-800">
+      {/* Hero Section */}
+      <header className="relative bg-gradient-to-r from-blue-500 to-green-500 text-white text-center py-20 md:py-32">
+        <div className="absolute inset-0 opacity-20">
+        </div>
+        <div className="relative z-10">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">Bem-vindo ao ReabilitePro</h1>
+          <p className="text-lg md:text-xl max-w-2xl mx-auto">Sua jornada para a recuperação começa aqui. Conectando pacientes e profissionais de saúde com tecnologia de ponta.</p>
+          <button className="mt-8 bg-white text-blue-500 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition-transform transform hover:scale-105">
+            Comece Agora
+          </button>
+        </div>
+      </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Features Section */}
+      <main className="container mx-auto px-6 py-16 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-12">Funcionalidades Principais</h2>
+        <div className="grid md:grid-cols-3 gap-12">
+          <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow">
+            <h3 className="text-2xl font-semibold mb-4">Planos Personalizados</h3>
+            <p>Receba planos de reabilitação feitos sob medida para suas necessidades, criados por especialistas.</p>
+          </div>
+          <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow">
+            <h3 className="text-2xl font-semibold mb-4">Acompanhamento Contínuo</h3>
+            <p>Monitore seu progresso com gráficos e relatórios detalhados, compartilhados em tempo real com seu fisioterapeuta.</p>
+          </div>
+          <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow">
+            <h3 className="text-2xl font-semibold mb-4">Canal de Comunicação</h3>
+            <p>Comunicação direta e segura com seu profissional de saúde para tirar dúvidas e receber orientações.</p>
+          </div>
+        </div>
+        <div className="mt-12">
+          <button 
+            onClick={fetchData} 
+            className="bg-green-500 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-green-600 transition-transform transform hover:scale-105">
+            Testar API
+          </button>
+          {message && <p className="mt-4 text-xl">API Response: {message}</p>}
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* CTA Section */}
+      <section className="bg-blue-600 text-white py-20">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Pronto para transformar sua recuperação?</h2>
+          <p className="text-lg md:text-xl max-w-3xl mx-auto mb-8">Junte-se à comunidade ReabilitePro e dê o próximo passo na sua jornada de bem-estar.</p>
+          <button className="bg-white text-blue-600 font-bold py-3 px-10 rounded-full shadow-xl hover:bg-gray-200 transition-transform transform hover:scale-105">
+            Cadastre-se Gratuitamente
+          </button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-8">
+        <div className="container mx-auto px-6 text-center">
+          <p>&copy; 2024 ReabilitePro. Todos os direitos reservados.</p>
+        </div>
       </footer>
     </div>
   );
