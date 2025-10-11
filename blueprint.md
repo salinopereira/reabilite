@@ -34,52 +34,43 @@ O ReabilitePro é uma aplicação web moderna para fisioterapeutas e profissiona
   - Utilização do arquivo `.env.local` para armazenar as credenciais do Supabase de forma segura.
 - **Página de Cadastro (`/signup`):**
   - Formulário para registrar novos usuários com nome, e-mail, senha e tipo de usuário (Paciente ou Profissional).
-  - A lógica de cadastro se comunica com a API de Auth do Supabase.
-  - Feedback visual (sucesso/erro) para o usuário.
 - **Página de Login (`/login`):**
   - Formulário para autenticar usuários com e-mail e senha.
-  - Redireciona para o `/dashboard` em caso de sucesso.
-- **Página de Dashboard (`/dashboard`):**
-  - Página inicial para usuários autenticados.
-  - Exibe uma mensagem de boas-vindas com o nome do usuário.
-  - Inclui um botão de "Sair" (Logout).
 
 ### **Versão 0.3: Refatoração da Autenticação**
 - **Centralização da Segurança:**
-  - Foi criado um layout de rota (`src/app/(app)/layout.tsx`).
-  - Este layout agora atua como um "guardião", verificando se o usuário está logado antes de renderizar qualquer página dentro do grupo `(app)`.
-  - Se o usuário não estiver logado, ele é automaticamente redirecionado para a página `/login`.
-- **Código Simplificado:** A lógica de verificação de sessão foi removida das páginas individuais (como o dashboard), tornando o código mais limpo, seguro e fácil de manter.
+  - Foi criado um layout de rota (`src/app/(app)/layout.tsx`) que atua como um "guardião", redirecionando usuários não logados.
+- **Navegação Global:**
+  - Criado o componente `Nav.tsx` para uma barra de navegação consistente.
+  - A navegação foi integrada ao layout principal, aparecendo em todas as páginas da área logada.
+
+### **Versão 0.4: Módulo de Gerenciamento de Pacientes**
+- **Estrutura do Banco de Dados:**
+  - Criada a tabela `pacientes` no Supabase com colunas para `nome_completo`, `email`, `telefone`, `data_nascimento`.
+  - Estabelecida uma relação de chave estrangeira (`id_profissional`) com a tabela `auth.users` para associar cada paciente a um profissional.
+- **Listagem de Pacientes (`/pacientes`):**
+  - A página busca e exibe uma lista de todos os pacientes associados ao profissional logado.
+  - Apresenta os pacientes em formato de cartões com suas informações principais.
+  - Exibe uma mensagem amigável caso nenhum paciente tenha sido adicionado.
+- **Adição de Pacientes (Formulário em Modal):**
+  - Criado um componente de `Modal` reutilizável.
+  - Desenvolvido um formulário (`AddPatientForm.tsx`) para inserir os dados de um novo paciente.
+  - Ao clicar no botão "+ Adicionar Paciente", o formulário é exibido em um modal.
+  - Ao salvar, o novo paciente é inserido no banco de dados e a lista na tela é atualizada em tempo real.
 
 ---
 
-## **Plano Atual: Módulo de Gerenciamento de Pacientes (Versão 0.4)**
+## **Plano Futuro: Página de Detalhes do Paciente (Versão 0.5)**
 
-O próximo passo é construir a funcionalidade principal para o profissional: o gerenciamento de seus pacientes.
+Agora que podemos listar e adicionar pacientes, o próximo passo é criar um espaço dedicado para cada um deles.
 
-### **1. Tabela de Pacientes no Supabase**
-- **Ação:** Vou guiar você para criar uma nova tabela chamada `pacientes` no seu banco de dados Supabase.
-- **Colunas:**
-  - `id` (Chave Primária, gerada automaticamente)
-  - `nome_completo` (Texto)
-  - `email` (Texto, único)
-  - `telefone` (Texto)
-  - `data_nascimento` (Data)
-  - `id_profissional` (UUID, Chave Estrangeira referenciando `auth.users.id`)
-  - `created_at` (Timestamp, gerado automaticamente)
+### **1. Rota Dinâmica para Pacientes**
+- **Ação:** Criarei uma rota dinâmica, como `src/app/(app)/pacientes/[id]/page.tsx`.
+- **Funcionalidade:** O `[id]` na URL permitirá que tenhamos uma página única para cada paciente, baseada no seu ID do banco de dados.
 
-### **2. Página para Listar Pacientes (`/pacientes`)**
-- **Ação:** Criarei a página em `src/app/(app)/pacientes/page.tsx`.
+### **2. Página de Detalhes**
+- **Ação:** Desenvolverei a página que buscará os dados completos do paciente específico (usando o ID da URL) e os exibirá.
 - **Funcionalidade:**
-  - A página buscará e exibirá uma lista de todos os pacientes associados ao profissional logado.
-  - Terá um botão "Adicionar Novo Paciente".
-  - O design será uma tabela ou uma grade de cartões, seguindo nosso estilo visual.
-
-### **3. Formulário para Adicionar Pacientes**
-- **Ação:** Criarei um componente de formulário (provavelmente em um modal) para adicionar um novo paciente.
-- **Funcionalidade:**
-  - O formulário conterá campos para todas as informações do paciente (nome, e-mail, etc.).
-  - Ao submeter, os dados serão salvos na tabela `pacientes` no Supabase.
-
-### **4. Página de Detalhes do Paciente (Futuro)**
-- Após a listagem e criação, o próximo passo será criar uma página dinâmica para visualizar os detalhes e o histórico de um paciente específico.
+  - Exibirá todas as informações de cadastro do paciente.
+  - Este será o local onde, no futuro, adicionaremos o histórico de avaliações, sessões, gráficos de progresso, etc.
+- **Navegação:** Será possível navegar da lista de pacientes para a página de detalhes de um paciente específico ao clicar no seu cartão.
