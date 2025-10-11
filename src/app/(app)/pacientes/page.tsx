@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link'; // Import Link
 import { createClient } from '@supabase/supabase-js';
 import type { User } from '@supabase/supabase-js';
-import Modal from '@/components/Modal'; // Import Modal
-import AddPatientForm from '@/components/AddPatientForm'; // Import Form
+import Modal from '@/components/Modal';
+import AddPatientForm from '@/components/AddPatientForm';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -15,7 +16,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Define the type for a Paciente
 interface Paciente {
   id: string;
   nome_completo: string;
@@ -28,7 +28,7 @@ export default function PacientesPage() {
   const [user, setUser] = useState<User | null>(null);
   const [pacientes, setPacientes] = useState<Paciente[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +39,7 @@ export default function PacientesPage() {
           .from('pacientes')
           .select('*')
           .eq('id_profissional', user.id)
-          .order('created_at', { ascending: false }); // Show newest first
+          .order('created_at', { ascending: false });
 
         if (error) {
           console.error('Error fetching pacientes:', error);
@@ -54,7 +54,6 @@ export default function PacientesPage() {
   }, []);
 
   const handlePatientAdded = (newPatient: Paciente) => {
-    // Add the new patient to the beginning of the list
     setPacientes([newPatient, ...pacientes]);
   };
 
@@ -65,7 +64,7 @@ export default function PacientesPage() {
               <div className="flex justify-between items-center mb-12">
                   <h1 className="text-3xl font-bold tracking-tighter">Meus Pacientes</h1>
                   <button 
-                    onClick={() => setIsModalOpen(true)} // Open modal on click
+                    onClick={() => setIsModalOpen(true)}
                     className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out transform hover:scale-105">
                       + Adicionar Paciente
                   </button>
@@ -81,12 +80,16 @@ export default function PacientesPage() {
               ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {pacientes.map((paciente) => (
-                          <div key={paciente.id} className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 shadow-lg hover:border-cyan-500/50 transition-colors duration-300">
-                              <h3 className="text-xl font-semibold text-teal-400">{paciente.nome_completo}</h3>
-                              <p className="text-slate-400 mt-2 break-all">{paciente.email}</p>
-                              {paciente.telefone && <p className="text-slate-400">{paciente.telefone}</p>}
-                              <p className="text-xs text-slate-500 mt-4">Cadastro em: {new Date(paciente.created_at).toLocaleDateString()}</p>
-                          </div>
+                          <Link href={`/pacientes/${paciente.id}`} key={paciente.id}>
+                            <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 shadow-lg h-full hover:border-cyan-500/50 transition-colors duration-300 flex flex-col justify-between">
+                                <div>
+                                    <h3 className="text-xl font-semibold text-teal-400">{paciente.nome_completo}</h3>
+                                    <p className="text-slate-400 mt-2 break-all">{paciente.email}</p>
+                                    {paciente.telefone && <p className="text-slate-400">{paciente.telefone}</p>}
+                                </div>
+                                <p className="text-xs text-slate-500 mt-4">Cadastro em: {new Date(paciente.created_at).toLocaleDateString()}</p>
+                            </div>
+                          </Link>
                       ))}
                   </div>
               )}

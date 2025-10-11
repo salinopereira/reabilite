@@ -44,33 +44,42 @@ O ReabilitePro é uma aplicação web moderna para fisioterapeutas e profissiona
   - Criado o componente `Nav.tsx` para uma barra de navegação consistente.
   - A navegação foi integrada ao layout principal, aparecendo em todas as páginas da área logada.
 
-### **Versão 0.4: Módulo de Gerenciamento de Pacientes**
+### **Versão 0.4: Módulo de Gerenciamento de Pacientes (CRUD Básico)**
 - **Estrutura do Banco de Dados:**
-  - Criada a tabela `pacientes` no Supabase com colunas para `nome_completo`, `email`, `telefone`, `data_nascimento`.
-  - Estabelecida uma relação de chave estrangeira (`id_profissional`) com a tabela `auth.users` para associar cada paciente a um profissional.
+  - Criada a tabela `pacientes` no Supabase.
+  - Estabelecida uma relação de chave estrangeira (`id_profissional`) com a tabela `auth.users`.
 - **Listagem de Pacientes (`/pacientes`):**
-  - A página busca e exibe uma lista de todos os pacientes associados ao profissional logado.
-  - Apresenta os pacientes em formato de cartões com suas informações principais.
-  - Exibe uma mensagem amigável caso nenhum paciente tenha sido adicionado.
+  - A página busca e exibe uma lista dos pacientes do profissional logado.
 - **Adição de Pacientes (Formulário em Modal):**
-  - Criado um componente de `Modal` reutilizável.
-  - Desenvolvido um formulário (`AddPatientForm.tsx`) para inserir os dados de um novo paciente.
-  - Ao clicar no botão "+ Adicionar Paciente", o formulário é exibido em um modal.
-  - Ao salvar, o novo paciente é inserido no banco de dados e a lista na tela é atualizada em tempo real.
+  - Implementação de um formulário em modal para adicionar novos pacientes e atualizar a lista em tempo real.
+
+### **Versão 0.5: Página de Detalhes do Paciente**
+- **Navegação:**
+  - Os cartões na lista de pacientes tornaram-se links clicáveis.
+- **Rota Dinâmica:**
+  - Criada a rota `src/app/(app)/pacientes/[id]/page.tsx` para exibir detalhes de um paciente específico.
+- **Página de Detalhes:**
+  - A página busca os dados completos do paciente (usando o ID da URL) e os exibe.
+  - Inclui um link para voltar facilmente para a lista de pacientes.
 
 ---
 
-## **Plano Futuro: Página de Detalhes do Paciente (Versão 0.5)**
+## **Plano Futuro: Módulo de Avaliações (Versão 0.6)**
 
-Agora que podemos listar e adicionar pacientes, o próximo passo é criar um espaço dedicado para cada um deles.
+Com o gerenciamento de pacientes estabelecido, o próximo passo crucial é permitir que os profissionais criem e registrem avaliações para eles. Isso transformará a aplicação de um simples catálogo para uma ferramenta de acompanhamento clínico.
 
-### **1. Rota Dinâmica para Pacientes**
-- **Ação:** Criarei uma rota dinâmica, como `src/app/(app)/pacientes/[id]/page.tsx`.
-- **Funcionalidade:** O `[id]` na URL permitirá que tenhamos uma página única para cada paciente, baseada no seu ID do banco de dados.
+### **1. Estrutura do Banco de Dados para Avaliações**
+- **Ação:** Criarei uma nova tabela `avaliacoes` no Supabase.
+- **Estrutura Proposta:**
+  - `id`: Chave primária.
+  - `id_paciente`: Chave estrangeira referenciando a tabela `pacientes`.
+  - `data_avaliacao`: Data em que a avaliação foi realizada.
+  - `titulo`: Um título para a avaliação (ex: "Avaliação Inicial do Ombro Direito").
+  - `notas_subjetivas`: Campo de texto para as queixas do paciente (o que ele sente).
+  - `observacoes_objetivas`: Campo de texto para as observações do profissional (o que ele mede e vê).
 
-### **2. Página de Detalhes**
-- **Ação:** Desenvolverei a página que buscará os dados completos do paciente específico (usando o ID da URL) e os exibirá.
+### **2. Interface na Página de Detalhes do Paciente**
+- **Ação:** Modificarei a página `pacientes/[id]/page.tsx` para incluir uma nova seção de "Avaliações".
 - **Funcionalidade:**
-  - Exibirá todas as informações de cadastro do paciente.
-  - Este será o local onde, no futuro, adicionaremos o histórico de avaliações, sessões, gráficos de progresso, etc.
-- **Navegação:** Será possível navegar da lista de pacientes para a página de detalhes de um paciente específico ao clicar no seu cartão.
+  - Listará todas as avaliações já realizadas para aquele paciente.
+  - Terá um botão "+ Adicionar Avaliação" para abrir um formulário (provavelmente em um modal, similar ao de adicionar pacientes).
