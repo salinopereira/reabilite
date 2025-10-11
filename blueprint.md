@@ -1,78 +1,85 @@
-# Blueprint do Projeto: Reabilite Pro
 
-## 🎯 Objetivo
+# Blueprint do Projeto: ReabilitePro
 
-Criar uma plataforma digital de saúde integrativa e educação, onde profissionais e pacientes possam se cadastrar, interagir e utilizar recursos de acompanhamento online. A ideia é oferecer um ecossistema completo que conecta Educação Física, Fisioterapia, Nutrição e Psicologia, sob o conceito da Reabilite — promover saúde de forma interdisciplinar.
+## Visão Geral
 
-## Stack Tecnológica
+O ReabilitePro é uma aplicação web moderna para fisioterapeutas e profissionais de reabilitação gerenciarem seus pacientes e acompanhamentos. A plataforma oferece um sistema de autenticação seguro, gerenciamento de perfis de pacientes e, futuramente, a criação e acompanhamento de avaliações de reabilitação.
 
-*   **Framework:** Next.js
-*   **Linguagem:** TypeScript
-*   **Estilização:** Tailwind CSS
-*   **Backend & DB:** Supabase
-*   **Assistente de IA:** Gemini (integrado ao ambiente de desenvolvimento)
+---
 
-## ⚙️ Funcionalidades Principais
+## Arquitetura e Estilo
 
-### 1. Cadastro e Login
-*   **Tipos de usuário:** Profissional e Paciente.
-*   **Páginas:** `src/app/signup/page.tsx` e `src/app/login/page.tsx`.
-*   **Backend:** Integração com o sistema de autenticação do Supabase.
-*   **Validação:** Validação de dados no cliente e no servidor.
+- **Framework:** Next.js com App Router
+- **Estilo:** Tailwind CSS
+- **Design:** Tema escuro, profissional e moderno, com foco em uma interface limpa, gradientes sutis (ciano e azul) e boa usabilidade.
+- **Backend & Autenticação:** Supabase (PostgreSQL, Auth)
+- **Fonte:** Poppins
 
-### 2. Dashboard Principal
-*   **Interface Dinâmica:** O conteúdo do dashboard se adapta ao tipo de usuário logado (Profissional ou Paciente).
-*   **Componentes:** Cards com informações rápidas (consultas, pacientes, métricas, progresso).
-*   **IA:** Integração futura com IA para fornecer sugestões personalizadas.
+---
 
-### 3. Gerenciamento de Pacientes (Para Profissionais)
-*   **CRUD:** Cadastro, edição e acompanhamento de pacientes.
-*   **Acompanhamento:** Histórico e evolução (peso, medidas, postura, adesão ao treino, etc.).
-*   **Rotas:** Componentes dedicados dentro de `/dashboard/pacientes`.
+## Funcionalidades Implementadas (Histórico)
 
-### 4. Avaliação e Protocolos
-*   **Módulo Inicial:** Avaliação postural.
-*   **Automação com IA:** Formulários que utilizam IA para gerar relatórios automáticos.
-*   **Exportação:** Funcionalidade para exportar relatórios em PDF.
+### **Versão 0.1: Estrutura Inicial e Landing Page**
+- **Estrutura do Projeto:** Configuração inicial do Next.js.
+- **Landing Page (`/`):**
+  - Design visualmente atraente com o logo da aplicação.
+  - Seções: "Sobre", "Recursos", "Planos".
+  - Botões de "Login" e "Cadastro" que direcionam para as respectivas páginas.
+- **Estilo Global:** Configuração do `tailwind.config.ts` e `globals.css` para o tema escuro.
 
-### 5. Design e Experiência (Reabilite Design System)
-*   **Estilo:** Minimalista, limpo e profissional.
-*   **Responsividade:** Layout totalmente responsivo utilizando Tailwind CSS.
-*   **Animações:** Uso de ícones (Lucide) e animações suaves (Framer Motion) para uma experiência de usuário fluida.
+### **Versão 0.2: Sistema de Autenticação com Supabase**
+- **Instalação:** Adicionado o pacote `@supabase/supabase-js`.
+- **Configuração:**
+  - Criação do arquivo `src/lib/supabaseClient.ts` para inicializar o cliente Supabase.
+  - Utilização do arquivo `.env.local` para armazenar as credenciais do Supabase de forma segura.
+- **Página de Cadastro (`/signup`):**
+  - Formulário para registrar novos usuários com nome, e-mail, senha e tipo de usuário (Paciente ou Profissional).
+  - A lógica de cadastro se comunica com a API de Auth do Supabase.
+  - Feedback visual (sucesso/erro) para o usuário.
+- **Página de Login (`/login`):**
+  - Formulário para autenticar usuários com e-mail e senha.
+  - Redireciona para o `/dashboard` em caso de sucesso.
+- **Página de Dashboard (`/dashboard`):**
+  - Página inicial para usuários autenticados.
+  - Exibe uma mensagem de boas-vindas com o nome do usuário.
+  - Inclui um botão de "Sair" (Logout).
 
-## 🧩 Arquitetura do Projeto
+### **Versão 0.3: Refatoração da Autenticação**
+- **Centralização da Segurança:**
+  - Foi criado um layout de rota (`src/app/(app)/layout.tsx`).
+  - Este layout agora atua como um "guardião", verificando se o usuário está logado antes de renderizar qualquer página dentro do grupo `(app)`.
+  - Se o usuário não estiver logado, ele é automaticamente redirecionado para a página `/login`.
+- **Código Simplificado:** A lógica de verificação de sessão foi removida das páginas individuais (como o dashboard), tornando o código mais limpo, seguro e fácil de manter.
 
-```
-src/
- ├─ app/
- │   ├─ (auth)/
- │   │   ├─ login/page.tsx
- │   │   └─ signup/page.tsx
- │   ├─ (app)/
- │   │   ├─ dashboard/
- │   │   │   ├─ pacientes/
- │   │   │   ├─ avaliacao/
- │   │   │   ├─ layout.tsx
- │   │   │   └─ page.tsx
- │   │   └─ layout.tsx
- │   ├─ api/
- │   ├─ layout.tsx
- │   └─ page.tsx (Landing Page)
- │
- ├─ components/  (Componentes reutilizáveis, ex: Button, Input, Card)
- ├─ lib/         (Configurações de clientes, ex: supabaseClient.ts)
- └─ utils/       (Funções utilitárias)
-public/
- ├─ prompt_reabilite_ia.txt
- ├─ prompt_revisao.txt
- └─ prompt_dashboard.txt
-```
+---
 
-## 🤖 Papel da IA (Gemini)
+## **Plano Atual: Módulo de Gerenciamento de Pacientes (Versão 0.4)**
 
-A IA é uma parceira ativa no desenvolvimento, responsável por:
-*   Revisar e sugerir melhorias no código.
-*   Corrigir bugs e erros de implementação.
-*   Criar componentes, páginas e lógicas de negócio com base nos prompts.
-*   Otimizar a performance da aplicação.
-*   Preencher lacunas do projeto de forma proativa.
+O próximo passo é construir a funcionalidade principal para o profissional: o gerenciamento de seus pacientes.
+
+### **1. Tabela de Pacientes no Supabase**
+- **Ação:** Vou guiar você para criar uma nova tabela chamada `pacientes` no seu banco de dados Supabase.
+- **Colunas:**
+  - `id` (Chave Primária, gerada automaticamente)
+  - `nome_completo` (Texto)
+  - `email` (Texto, único)
+  - `telefone` (Texto)
+  - `data_nascimento` (Data)
+  - `id_profissional` (UUID, Chave Estrangeira referenciando `auth.users.id`)
+  - `created_at` (Timestamp, gerado automaticamente)
+
+### **2. Página para Listar Pacientes (`/pacientes`)**
+- **Ação:** Criarei a página em `src/app/(app)/pacientes/page.tsx`.
+- **Funcionalidade:**
+  - A página buscará e exibirá uma lista de todos os pacientes associados ao profissional logado.
+  - Terá um botão "Adicionar Novo Paciente".
+  - O design será uma tabela ou uma grade de cartões, seguindo nosso estilo visual.
+
+### **3. Formulário para Adicionar Pacientes**
+- **Ação:** Criarei um componente de formulário (provavelmente em um modal) para adicionar um novo paciente.
+- **Funcionalidade:**
+  - O formulário conterá campos para todas as informações do paciente (nome, e-mail, etc.).
+  - Ao submeter, os dados serão salvos na tabela `pacientes` no Supabase.
+
+### **4. Página de Detalhes do Paciente (Futuro)**
+- Após a listagem e criação, o próximo passo será criar uma página dinâmica para visualizar os detalhes e o histórico de um paciente específico.

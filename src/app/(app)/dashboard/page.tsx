@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
 
-// Initialize Supabase client
+// NOTE: This client is re-initialized here for simplicity. In a larger app,
+// this would be imported from a central file (e.g., src/lib/supabaseClient.ts)
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -17,57 +17,42 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
+  // The AppLayout now handles the redirect if the user is not authenticated.
+  // This useEffect simply fetches the user data for display.
   useEffect(() => {
     const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (error || !data.user) {
-        // If no user is logged in, redirect to login page
-        router.push('/login');
-      } else {
+      const { data } = await supabase.auth.getUser();
+      if (data.user) {
         setUser(data.user);
-        setLoading(false);
       }
     };
-
     fetchUser();
-  }, [router]);
+  }, []);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push('/login');
-  };
-
-  if (loading) {
+  // A simple loading state until user data is fetched for display.
+  if (!user) {
     return (
         <div className="min-h-screen bg-slate-900 text-slate-100 flex items-center justify-center">
-            <p>Carregando...</p>
+            <p>Carregando dados do dashboard...</p>
         </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 p-8">
+    <div className="text-slate-100 p-8">
         <div className="container mx-auto">
-            <header className="flex justify-between items-center mb-12">
+            <header className="mb-12">
                  <h1 className="text-3xl font-bold tracking-tighter">
-                    Dashboard <span className="font-normal text-slate-400">- {user?.user_metadata.user_type === 'profissional' ? 'Profissional' : 'Paciente'}</span>
+                    Visão Geral
                 </h1>
-                <button 
-                    onClick={handleLogout} 
-                    className="bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                    Sair
-                </button>
+                 <p className="text-slate-400 mt-1">Seu resumo de atividades e próximos passos.</p>
             </header>
 
-            <main>
-                <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-8 shadow-lg">
-                    <h2 className="text-2xl font-semibold mb-2">Bem-vindo, {user?.user_metadata.full_name || user?.email}!</h2>
-                    <p className="text-slate-400">Este é o seu painel de controle. Em breve, você verá seus dados e acompanhamentos aqui.</p>
-                </div>
-            </main>
+            <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-8 shadow-lg">
+                <h2 className="text-2xl font-semibold mb-2">Bem-vindo, {user?.user_metadata.full_name || user?.email}!</h2>
+                <p className="text-slate-400">Este é o seu painel de controle. Use a navegação acima para acessar as seções.</p>
+            </div>
         </div>
     </div>
   );
