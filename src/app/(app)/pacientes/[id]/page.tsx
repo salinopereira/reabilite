@@ -127,7 +127,9 @@ export default function PatientDetailPage() {
                                       <p className="font-semibold text-teal-400">{avaliacao.titulo}</p>
                                       <p className="text-sm text-slate-400">Data: {new Date(avaliacao.data_avaliacao).toLocaleDateString()}</p>
                                   </div>
-                                  <button className="text-slate-400 hover:text-white">Ver Detalhes</button>
+                                  <Link href={`/pacientes/${paciente.id}/avaliacoes/${avaliacao.id}`} className="text-slate-300 bg-slate-600 hover:bg-slate-500 font-bold py-2 px-4 rounded-lg transition-colors">
+                                    Ver Detalhes
+                                  </Link>
                               </li>
                           ))}
                       </ul>

@@ -3,7 +3,7 @@
 
 ## Visão Geral
 
-O ReabilitePro é uma aplicação web moderna para fisioterapeutas e profissionais de reabilitação gerenciarem seus pacientes e acompanhamentos. A plataforma oferece um sistema de autenticação seguro, gerenciamento de perfis de pacientes e um sistema completo para criar e acompanhar avaliações de reabilitação.
+O ReabilitePro é uma aplicação web moderna para fisioterapeutas e profissionais de reabilitação gerenciarem seus pacientes e acompanhamentos. A plataforma oferece um sistema de autenticação seguro, gerenciamento de perfis de pacientes e um sistema completo para criar, visualizar, e futuramente, editar e excluir avaliações de reabilitação.
 
 ---
 
@@ -19,44 +19,34 @@ O ReabilitePro é uma aplicação web moderna para fisioterapeutas e profissiona
 
 ## Funcionalidades Implementadas (Histórico)
 
-### **Versão 0.1: Estrutura Inicial e Landing Page**
-- Configuração do projeto, criação da landing page com seções e botões de navegação, e estilo global.
-
-### **Versão 0.2: Sistema de Autenticação com Supabase**
-- Instalação e configuração do Supabase, criação das páginas e formulários de Login e Cadastro.
-
-### **Versão 0.3: Refatoração da Autenticação**
-- Implementação de um layout de rota (`(app)`) para proteger o acesso e criação de uma barra de navegação global.
-
-### **Versão 0.4: Módulo de Gerenciamento de Pacientes (CRUD Básico)**
-- Criação da tabela `pacientes` no Supabase.
-- Implementação da listagem de pacientes e do formulário de adição em modal.
-
-### **Versão 0.5: Página de Detalhes do Paciente**
-- Os cartões de paciente se tornaram links.
-- Criação da rota dinâmica `pacientes/[id]` para exibir os detalhes cadastrais completos de um paciente específico.
+### **Versão 0.1 a 0.5 (Resumo)**
+- Estrutura inicial, sistema de autenticação, refatoração com rotas protegidas e o CRUD básico de pacientes (Adicionar, Listar, Ver Detalhes).
 
 ### **Versão 0.6: Módulo de Avaliações (CRUD Básico)**
-- **Estrutura do Banco de Dados:**
-  - Criada a tabela `avaliacoes` no Supabase, com colunas para `id_paciente`, `titulo`, `data_avaliacao`, `notas_subjetivas`, `observacoes_objetivas`.
-  - Políticas de Segurança (RLS) foram configuradas para garantir a privacidade dos dados.
-- **Listagem de Avaliações:**
-  - A página de detalhes do paciente (`/pacientes/[id]`) foi atualizada para buscar e exibir uma lista com o histórico de avaliações daquele paciente.
-- **Adição de Avaliações (Formulário em Modal):**
-  - Desenvolvido um formulário (`AddAvaliacaoForm.tsx`) para inserir os dados de uma nova avaliação.
-  - Ao clicar no botão "+ Adicionar Avaliação", o formulário é exibido em um modal.
-  - Ao salvar, a nova avaliação é inserida no banco de dados e a lista na tela é atualizada em tempo real.
+- **Banco de Dados:** Criação da tabela `avaliacoes` com políticas de segurança.
+- **Interface:** Implementação da listagem de avaliações na página do paciente e do formulário de adição de novas avaliações em um modal.
+
+### **Versão 0.7: Visualização de Detalhes da Avaliação**
+- **Navegação:** O botão "Ver Detalhes" na lista de avaliações foi transformado em um link funcional.
+- **Rota Dinâmica:** Criada a rota aninhada `/pacientes/[id]/avaliacoes/[avaliacaoId]` para exibir uma avaliação específica.
+- **Página de Detalhes:** A nova página busca os dados completos da avaliação (incluindo as notas subjetivas e objetivas) do Supabase e os apresenta em um layout claro, com foco na leitura das informações clínicas.
 
 ---
 
-## **Plano Futuro: Visualização de Detalhes da Avaliação (Versão 0.7)**
+## **Plano Futuro: Editar e Excluir Pacientes (Versão 0.8)**
 
-Agora que podemos criar e listar avaliações, o próximo passo é permitir que o profissional veja todos os detalhes de uma avaliação específica.
+Com a visualização de pacientes e avaliações bem estabelecida, a próxima etapa é adicionar funcionalidades de gerenciamento essenciais. Atualmente, um paciente pode ser adicionado, mas suas informações não podem ser corrigidas e ele não pode ser removido do sistema.
 
-### **1. Rota Dinâmica para Avaliações**
-- **Ação:** Criarei uma nova rota dinâmica, como `/pacientes/[id]/avaliacoes/[avaliacaoId]`.
-- **Funcionalidade:** Isso permitirá ter uma página única para cada avaliação registrada.
+### **1. Edição de Pacientes**
+- **Ação:** Adicionar um botão "Editar" na página de detalhes do paciente (`/pacientes/[id]`).
+- **Funcionalidade:**
+  - Ao clicar no botão, um modal (reaproveitando o componente `Modal.tsx` e `AddPatientForm.tsx` com modificações) se abrirá, preenchido com os dados atuais do paciente.
+  - O profissional poderá alterar as informações e, ao salvar, os dados serão atualizados no Supabase.
+  - A interface na página de detalhes será atualizada automaticamente com as novas informações.
 
-### **2. Página de Detalhes da Avaliação**
-- **Ação:** Desenvolverei a página que buscará os dados completos da avaliação (incluindo as notas subjetivas e objetivas) e os exibirá em um formato de fácil leitura.
-- **Navegação:** Será possível navegar da lista de avaliações (na página do paciente) para a página de detalhes de uma avaliação específica ao clicar no botão "Ver Detalhes".
+### **2. Exclusão de Pacientes**
+- **Ação:** Adicionar um botão "Excluir" na página de detalhes do paciente.
+- **Funcionalidade:**
+  - Ao clicar, um modal de confirmação será exibido para prevenir a exclusão acidental (Ex: "Você tem certeza que deseja excluir este paciente? Esta ação não pode ser desfeita.").
+  - Se o profissional confirmar, o paciente será removido do banco de dados. Graças à configuração `ON DELETE CASCADE`, todas as avaliações associadas a ele também serão excluídas automaticamente.
+  - Após a exclusão, o usuário será redirecionado de volta para a lista principal de pacientes.
