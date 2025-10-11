@@ -34,4 +34,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_REABILITE_38E4A }}'
           channelId: live
-          projectId: reabilite-38e4a
+          projectId: reabilite-pro-efd1d
