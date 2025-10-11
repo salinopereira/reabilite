@@ -1,27 +1,78 @@
-# ReabilitePro Blueprint
+# Blueprint do Projeto: Reabilite Pro
 
-## Overview
+## 🎯 Objetivo
 
-ReabilitePro is a modern web application designed to help users with their rehabilitation process. It will feature a user-friendly interface for patients and tools for professionals to monitor progress. The application is built entirely with Next.js, leveraging API Routes for backend functionality, and is designed to be deployed on Firebase App Hosting.
+Criar uma plataforma digital de saúde integrativa e educação, onde profissionais e pacientes possam se cadastrar, interagir e utilizar recursos de acompanhamento online. A ideia é oferecer um ecossistema completo que conecta Educação Física, Fisioterapia, Nutrição e Psicologia, sob o conceito da Reabilite — promover saúde de forma interdisciplinar.
 
-## Style and Design Guide
+## Stack Tecnológica
 
-*   **Colors**: A professional and calming color palette will be used, focusing on blues, greens, and whites.
-*   **Typography**: Clean and readable fonts.
-*   **Layout**: Modern, responsive, and intuitive layout.
-*   **Iconography**: Use of icons to improve usability.
+*   **Framework:** Next.js
+*   **Linguagem:** TypeScript
+*   **Estilização:** Tailwind CSS
+*   **Backend & DB:** Supabase
+*   **Assistente de IA:** Gemini (integrado ao ambiente de desenvolvimento)
 
-## Current Plan: Refactor for Firebase App Hosting
+## ⚙️ Funcionalidades Principais
 
-Refactor the project to use Next.js API Routes for backend functionality, making it compatible with Firebase App Hosting.
+### 1. Cadastro e Login
+*   **Tipos de usuário:** Profissional e Paciente.
+*   **Páginas:** `src/app/signup/page.tsx` e `src/app/login/page.tsx`.
+*   **Backend:** Integração com o sistema de autenticação do Supabase.
+*   **Validação:** Validação de dados no cliente e no servidor.
 
-### Steps:
+### 2. Dashboard Principal
+*   **Interface Dinâmica:** O conteúdo do dashboard se adapta ao tipo de usuário logado (Profissional ou Paciente).
+*   **Componentes:** Cards com informações rápidas (consultas, pacientes, métricas, progresso).
+*   **IA:** Integração futura com IA para fornecer sugestões personalizadas.
 
-1.  **Update `blueprint.md`**: Document the new architecture and plan.
-2.  **Create API Route**: Create a new API route at `src/app/api/hello/route.ts` to handle backend logic.
-3.  **Remove Python Backend**: Delete the `backend` directory and its contents (`main.py`, `requirements.txt`).
-4.  **Update `.idx/dev.nix`**: Remove Python from the development environment to simplify the setup.
-5.  **Clean up project structure**: Remove unnecessary files and configurations related to the old Python backend.
-6.  **Update `src/app/page.tsx`**: Add a button to the main page that calls the new API route and displays the result.
-7.  **Add Firebase Configuration**: Add the necessary Firebase configuration to the project.
-8.  **Deploy to Firebase App Hosting**: Deploy the application.
+### 3. Gerenciamento de Pacientes (Para Profissionais)
+*   **CRUD:** Cadastro, edição e acompanhamento de pacientes.
+*   **Acompanhamento:** Histórico e evolução (peso, medidas, postura, adesão ao treino, etc.).
+*   **Rotas:** Componentes dedicados dentro de `/dashboard/pacientes`.
+
+### 4. Avaliação e Protocolos
+*   **Módulo Inicial:** Avaliação postural.
+*   **Automação com IA:** Formulários que utilizam IA para gerar relatórios automáticos.
+*   **Exportação:** Funcionalidade para exportar relatórios em PDF.
+
+### 5. Design e Experiência (Reabilite Design System)
+*   **Estilo:** Minimalista, limpo e profissional.
+*   **Responsividade:** Layout totalmente responsivo utilizando Tailwind CSS.
+*   **Animações:** Uso de ícones (Lucide) e animações suaves (Framer Motion) para uma experiência de usuário fluida.
+
+## 🧩 Arquitetura do Projeto
+
+```
+src/
+ ├─ app/
+ │   ├─ (auth)/
+ │   │   ├─ login/page.tsx
+ │   │   └─ signup/page.tsx
+ │   ├─ (app)/
+ │   │   ├─ dashboard/
+ │   │   │   ├─ pacientes/
+ │   │   │   ├─ avaliacao/
+ │   │   │   ├─ layout.tsx
+ │   │   │   └─ page.tsx
+ │   │   └─ layout.tsx
+ │   ├─ api/
+ │   ├─ layout.tsx
+ │   └─ page.tsx (Landing Page)
+ │
+ ├─ components/  (Componentes reutilizáveis, ex: Button, Input, Card)
+ ├─ lib/         (Configurações de clientes, ex: supabaseClient.ts)
+ └─ utils/       (Funções utilitárias)
+public/
+ ├─ prompt_reabilite_ia.txt
+ ├─ prompt_revisao.txt
+ └─ prompt_dashboard.txt
+```
+
+## 🤖 Papel da IA (Gemini)
+
+A IA é uma parceira ativa no desenvolvimento, responsável por:
+*   Revisar e sugerir melhorias no código.
+*   Corrigir bugs e erros de implementação.
+*   Criar componentes, páginas e lógicas de negócio com base nos prompts.
+*   Otimizar a performance da aplicação.
+*   Preencher lacunas do projeto de forma proativa.
