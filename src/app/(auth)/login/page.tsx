@@ -3,7 +3,7 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { supabase } from '../../../lib/supabaseClient'; // Importa a instância única
+import { supabase } from '@/lib/supabaseClient'; // Importa a instância única usando o alias
 
 export const dynamic = 'force-dynamic';
 
