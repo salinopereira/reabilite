@@ -56,3 +56,5 @@ O Fisiogest Pro é uma aplicação web moderna para fisioterapeutas gerenciarem 
     4.  **Centralização de Tipos:** A interface `Paciente` foi movida para `src/lib/types.ts` para ser reutilizada e evitar duplicação de código.
     5.  **Resolução de Erros:** Corrigida uma série de erros de compilação relacionados a `props` inconsistentes, erros de digitação e importações de tipos incorretas.
     6.  **Validação:** O projeto foi compilado com sucesso (`npm run build`), confirmando que a estrutura de componentes e tipos está correta.
+
+# Forçando novo build
