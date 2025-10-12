@@ -13,6 +13,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+// A interface correta, aceitando que `pacientes` é um array.
 interface AvaliacaoDetails {
   id: string;
   data_avaliacao: string;
@@ -52,6 +53,7 @@ export default function AvaliacaoDetailPage() {
         console.error('Error fetching evaluation details:', error);
         setError('Não foi possível carregar os dados da avaliação.');
       } else {
+        // Sem transformações. Apenas dizemos ao TypeScript que o `data` tem o formato correto.
         setAvaliacao(data as AvaliacaoDetails);
       }
       setLoading(false);
@@ -79,6 +81,7 @@ export default function AvaliacaoDetailPage() {
     <div className="text-slate-100 p-8">
         <div className="container mx-auto">
             <div className="mb-10">
+                 {/* Acessando o primeiro item do array de pacientes */}
                  <Link href={`/pacientes/${pacienteId}`} className="mb-12 inline-block text-cyan-400 hover:text-cyan-300 transition-colors">
                     &larr; Voltar para {avaliacao.pacientes?.[0]?.nome_completo || 'o paciente'}
                 </Link>
