@@ -19,7 +19,7 @@ interface AvaliacaoDetails {
   titulo: string;
   notas_subjetivas: string | null;
   observacoes_objetivas: string | null;
-  pacientes: { nome_completo: string } | null;
+  pacientes: { nome_completo: string }[] | null;
 }
 
 export default function AvaliacaoDetailPage() {
@@ -80,7 +80,7 @@ export default function AvaliacaoDetailPage() {
         <div className="container mx-auto">
             <div className="mb-10">
                  <Link href={`/pacientes/${pacienteId}`} className="mb-12 inline-block text-cyan-400 hover:text-cyan-300 transition-colors">
-                    &larr; Voltar para {avaliacao.pacientes?.nome_completo || 'o paciente'}
+                    &larr; Voltar para {avaliacao.pacientes?.[0]?.nome_completo || 'o paciente'}
                 </Link>
                 <h1 className="text-4xl font-bold tracking-tighter text-teal-300">{avaliacao.titulo}</h1>
                 <p className="text-lg text-slate-400">Data da Avaliação: {new Date(avaliacao.data_avaliacao).toLocaleDateString()}</p>
