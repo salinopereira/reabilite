@@ -523,3 +523,12 @@
 [debug] [2025-10-12T17:21:30.632Z] > authorizing via signed-in user (losd222@gmail.com)
 [debug] [2025-10-12T17:21:30.648Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/reabilite-pro-efd1d/services/ 200
 [debug] [2025-10-12T17:21:30.648Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/reabilite-pro-efd1d/services/ [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-12T17:39:50.204Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-12T17:39:50.216Z] > authorizing via signed-in user (losd222@gmail.com)
+[debug] [2025-10-12T17:39:50.317Z] Checked if tokens are valid: true, expires at: 1760293253758
+[debug] [2025-10-12T17:39:50.317Z] Checked if tokens are valid: true, expires at: 1760293253758
+[debug] [2025-10-12T17:39:50.318Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/reabilite-pro-efd1d [none]
+[debug] [2025-10-12T17:39:50.437Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/reabilite-pro-efd1d 200
+[debug] [2025-10-12T17:39:50.437Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/reabilite-pro-efd1d {"projectNumber":"35066393789","projectId":"reabilite-pro-efd1d","lifecycleState":"ACTIVE","name":"Reabilite Pro","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-10-06T01:36:22.776439Z"}
