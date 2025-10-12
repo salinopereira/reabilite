@@ -1,19 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabaseClient'; // Import the centralized Supabase client
 import type { User } from '@supabase/supabase-js';
 
-// NOTE: This client is re-initialized here for simplicity. In a larger app,
-// this would be imported from a central file (e.g., src/lib/supabaseClient.ts)
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Supabase URL and/or Anon Key are not defined in environment variables.');
-}
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// This line ensures the page is rendered dynamically on the server at request time
+export const dynamic = 'force-dynamic';
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
