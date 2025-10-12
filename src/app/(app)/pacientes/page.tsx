@@ -1,20 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link'; // Import Link
-import { createClient } from '@supabase/supabase-js';
+import Link from 'next/link';
+import { supabase } from '@/lib/supabaseClient'; // Import the centralized Supabase client
 import type { User } from '@supabase/supabase-js';
 import Modal from '@/components/Modal';
 import AddPatientForm from '@/components/AddPatientForm';
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Supabase URL and/or Anon Key are not defined in environment variables.');
-}
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// This line ensures the page is rendered dynamically on the server at request time
+export const dynamic = 'force-dynamic';
 
 interface Paciente {
   id: string;
