@@ -1,12 +1,1 @@
-build:
-  env:
-    - variable: NEXT_PUBLIC_SUPABASE_URL
-      secret: NEXT_PUBLIC_SUPABASE_URL
-    - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
-      secret: NEXT_PUBLIC_SUPABASE_ANON_KEY
-run:
-  env:
-    - variable: NEXT_PUBLIC_SUPABASE_URL
-      secret: NEXT_PUBLIC_SUPABASE_URL
-    - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
-      secret: NEXT_PUBLIC_SUPABASE_ANON_KEY
+# Temporarily emptied to provision service agent
