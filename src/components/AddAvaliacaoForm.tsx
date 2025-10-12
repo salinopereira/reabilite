@@ -13,11 +13,11 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 interface AddAvaliacaoFormProps {
   pacienteId: string;
-  onAvaliacaoAdded: (newAvaliacao: any) => void;
+  onEvaluationAdded: (newAvaliacao: any) => void;
   onClose: () => void;
 }
 
-export default function AddAvaliacaoForm({ pacienteId, onAvaliacaoAdded, onClose }: AddAvaliacaoFormProps) {
+export default function AddAvaliacaoForm({ pacienteId, onEvaluationAdded, onClose }: AddAvaliacaoFormProps) {
   const [titulo, setTitulo] = useState('');
   const [notasSubjetivas, setNotasSubjetivas] = useState('');
   const [observacoesObjetivas, setObservacoesObjetivas] = useState('');
@@ -61,7 +61,7 @@ export default function AddAvaliacaoForm({ pacienteId, onAvaliacaoAdded, onClose
     if (insertError) {
         setError(`Erro ao salvar avaliação: ${insertError.message}`);
     } else {
-        onAvaliacaoAdded(data);
+        onEvaluationAdded(data);
         onClose();
     }
 

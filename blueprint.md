@@ -1,52 +1,58 @@
-
-# Blueprint do Projeto: ReabilitePro
+# Blueprint: Fisiogest Pro
 
 ## Visão Geral
 
-O ReabilitePro é uma aplicação web moderna para fisioterapeutas e profissionais de reabilitação gerenciarem seus pacientes e acompanhamentos. A plataforma oferece um sistema de autenticação seguro, gerenciamento de perfis de pacientes e um sistema completo para criar, visualizar, e futuramente, editar e excluir avaliações de reabilitação.
+O Fisiogest Pro é uma aplicação web moderna para fisioterapeutas gerenciarem seus pacientes e o progresso clínico de forma eficiente. A plataforma permite o cadastro de pacientes, o registro de avaliações detalhadas (SOAP) e o acompanhamento da evolução de cada caso, tudo em uma interface intuitiva e reativa.
 
----
+## Design e Estilo
 
-## Arquitetura e Estilo
+- **Tema:** Escuro (Dark Mode) com um esquema de cores baseado em tons de ardósia (slate), acentuado por um ciano vibrante para ações primárias e elementos interativos.
+- **Tipografia:** Fonte sans-serif limpa e moderna para garantir legibilidade.
+- **Componentes:**
+  - **Cards:** Efeito de "levantado" com sombras suaves para destacar elementos como os cards de paciente.
+  - **Botões:** Botões de ação primária com cor ciano e efeito de sombra para se destacarem. Botões secundários com fundo cinza sutil.
+  - **Modais:** Experiência de modal fluida com fundo desfocado para focar a atenção do usuário na tarefa atual (adicionar/editar paciente, adicionar avaliação).
+  - **Ícones:** Uso de iconografia (Feather Icons) para ações como editar, deletar e adicionar, melhorando a usabilidade.
+- **Layout:** Responsivo e centrado, garantindo uma boa experiência tanto em desktops quanto em dispositivos móveis.
 
-- **Framework:** Next.js com App Router
-- **Estilo:** Tailwind CSS
-- **Design:** Tema escuro, profissional e moderno, com foco em uma interface limpa, gradientes sutis (ciano e azul) e boa usabilidade.
-- **Backend & Autenticação:** Supabase (PostgreSQL, Auth)
-- **Fonte:** Poppins
+## Funcionalidades Implementadas
 
----
+- **Autenticação de Usuários:**
+  - Cadastro (`/signup`) e Login (`/login`) de profissionais utilizando o Supabase Auth.
+  - Redirecionamento automático para o dashboard após o login.
+- **Dashboard (`/dashboard`):
+  - Apresenta um resumo ou ponto de partida para o profissional (atualmente, um placeholder).
+- **Gerenciamento de Pacientes (`/pacientes`):
+  - **Listagem:** Exibe todos os pacientes cadastrados em cards individuais, mostrando nome, email e telefone.
+  - **Ações Rápidas:** Botões para editar ou deletar um paciente diretamente do card.
+  - **Adicionar Paciente:** Botão "Adicionar Paciente" que abre um formulário em um modal para o cadastro de novos pacientes.
+  - **Busca:** Funcionalidade de busca para filtrar pacientes pelo nome.
+- **Visualização de Paciente (`/pacientes/[id]`):
+  - **Detalhes do Paciente:** Exibe todas as informações de um paciente específico.
+  - **Listagem de Avaliações:** Mostra um histórico de todas as avaliações já realizadas para aquele paciente.
+  - **Adicionar Avaliação:** Botão "Nova Avaliação" que abre um modal com um formulário para registrar uma nova avaliação (SOAP).
+- **Gerenciamento de Avaliações:
+  - **Criação:** O formulário de avaliação permite registrar Título, Data, Notas Subjetivas (queixa do paciente) e Observações Objetivas (análise do profissional).
+  - **Visualização:** A página de detalhes de uma avaliação (`/pacientes/[id]/avaliacoes/[avaliacaoId]`) exibe as informações registradas.
+- **Componentes Reutilizáveis:**
+  - `Modal.tsx`: Componente de modal genérico e estilizado.
+  - `AddPatientForm.tsx`, `EditPatientForm.tsx`, `AddAvaliacaoForm.tsx`: Formulários desacoplados para cada ação específica.
+  - `AddPatientModal.tsx`, `EditPatientModal.tsx`, `AddEvaluationModal.tsx`: Componentes que gerenciam o estado de visibilidade dos modais e envolvem os formulários.
+- **Tipagem:**
+  - `src/lib/types.ts`: Arquivo central para interfaces TypeScript (ex: `Paciente`), garantindo consistência em todo o projeto.
 
-## Funcionalidades Implementadas (Histórico)
+## Plano de Ação Atual
 
-### **Versão 0.1 a 0.5 (Resumo)**
-- Estrutura inicial, sistema de autenticação, refatoração com rotas protegidas e o CRUD básico de pacientes (Adicionar, Listar, Ver Detalhes).
-
-### **Versão 0.6: Módulo de Avaliações (CRUD Básico)**
-- **Banco de Dados:** Criação da tabela `avaliacoes` com políticas de segurança.
-- **Interface:** Implementação da listagem de avaliações na página do paciente e do formulário de adição de novas avaliações em um modal.
-
-### **Versão 0.7: Visualização de Detalhes da Avaliação**
-- **Navegação:** O botão "Ver Detalhes" na lista de avaliações foi transformado em um link funcional.
-- **Rota Dinâmica:** Criada a rota aninhada `/pacientes/[id]/avaliacoes/[avaliacaoId]` para exibir uma avaliação específica.
-- **Página de Detalhes:** A nova página busca os dados completos da avaliação (incluindo as notas subjetivas e objetivas) do Supabase e os apresenta em um layout claro, com foco na leitura das informações clínicas.
-
----
-
-## **Plano Futuro: Editar e Excluir Pacientes (Versão 0.8)**
-
-Com a visualização de pacientes e avaliações bem estabelecida, a próxima etapa é adicionar funcionalidades de gerenciamento essenciais. Atualmente, um paciente pode ser adicionado, mas suas informações não podem ser corrigidas e ele não pode ser removido do sistema.
-
-### **1. Edição de Pacientes**
-- **Ação:** Adicionar um botão "Editar" na página de detalhes do paciente (`/pacientes/[id]`).
-- **Funcionalidade:**
-  - Ao clicar no botão, um modal (reaproveitando o componente `Modal.tsx` e `AddPatientForm.tsx` com modificações) se abrirá, preenchido com os dados atuais do paciente.
-  - O profissional poderá alterar as informações e, ao salvar, os dados serão atualizados no Supabase.
-  - A interface na página de detalhes será atualizada automaticamente com as novas informações.
-
-### **2. Exclusão de Pacientes**
-- **Ação:** Adicionar um botão "Excluir" na página de detalhes do paciente.
-- **Funcionalidade:**
-  - Ao clicar, um modal de confirmação será exibido para prevenir a exclusão acidental (Ex: "Você tem certeza que deseja excluir este paciente? Esta ação não pode ser desfeita.").
-  - Se o profissional confirmar, o paciente será removido do banco de dados. Graças à configuração `ON DELETE CASCADE`, todas as avaliações associadas a ele também serão excluídas automaticamente.
-  - Após a exclusão, o usuário será redirecionado de volta para a lista principal de pacientes.
+- **Tarefa:** Implementar a funcionalidade de Adicionar Avaliação para um Paciente.
+- **Status:** **Concluído.**
+- **Passos Executados:**
+    1.  **Atualização da UI:** Adicionado um botão "Nova Avaliação" na página de detalhes do paciente.
+    2.  **Criação de Componentes:**
+        -   `AddEvaluationModal.tsx`: Gerencia a abertura e fechamento do modal de avaliação.
+        -   `AddAvaliacaoForm.tsx`: Contém o formulário para a criação de uma nova avaliação, com comunicação com o Supabase.
+    3.  **Refatoração:**
+        -   O componente `Modal.tsx` foi generalizado para aceitar um `title` e ser reutilizado.
+        -   `EditPatientModal.tsx` foi atualizado para usar o novo `Modal`.
+    4.  **Centralização de Tipos:** A interface `Paciente` foi movida para `src/lib/types.ts` para ser reutilizada e evitar duplicação de código.
+    5.  **Resolução de Erros:** Corrigida uma série de erros de compilação relacionados a `props` inconsistentes, erros de digitação e importações de tipos incorretas.
+    6.  **Validação:** O projeto foi compilado com sucesso (`npm run build`), confirmando que a estrutura de componentes e tipos está correta.
