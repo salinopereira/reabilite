@@ -1,17 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabaseClient'; // USE CENTRAL CLIENT
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Supabase URL and/or Anon Key are not defined');
-}
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// This line ensures the page is rendered dynamically on the server at request time
+export const dynamic = 'force-dynamic';
 
 // A interface correta, aceitando que `pacientes` é um array.
 interface AvaliacaoDetails {
