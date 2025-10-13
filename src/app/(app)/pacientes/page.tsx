@@ -69,7 +69,7 @@ export default function PacientesPage() {
               ) : pacientes.length === 0 ? (
                   <div className="text-center bg-slate-800/50 border border-dashed border-slate-700/50 rounded-2xl p-12">
                       <h2 className="text-xl font-semibold mb-2">Nenhum paciente encontrado.</h2>
-                      <p className="text-slate-400">Clique em "Adicionar Paciente" para começar a gerenciar seus acompanhamentos.</p>
+                      <p className="text-slate-400">Clique em &quot;Adicionar Paciente&quot; para começar a gerenciar seus acompanhamentos.</p>
                   </div>
               ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

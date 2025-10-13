@@ -1,178 +1,70 @@
-
+import { File, Globe, Window } from 'lucide-react';
 import Link from 'next/link';
-import type { Metadata } from 'next';
 
-// SVG Icon Components for better readability and reuse
-const ClipboardIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
-    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
-    <path d="m9 14 2 2 4-4" />
-  </svg>
-);
-
-const ChartIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M3 3v18h18" />
-    <path d="m19 9-5 5-4-4-3 3" />
-  </svg>
-);
-
-const MessageIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-  </svg>
-);
-
-
-export default function HomePage() {
+export default function LandingPage() {
   return (
-    <div className="bg-slate-900 text-slate-100 antialiased">
-      {/* Header & Nav */}
-      <header className="container mx-auto flex items-center justify-between p-6">
-        <h1 className="text-2xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-cyan-500">
-          ReabilitePro
-        </h1>
-        <nav>
-          <Link href="/login" className="text-slate-300 hover:text-cyan-400 transition-colors">
-            Login
-          </Link>
-        </nav>
-      </header>
+    <div className="flex flex-col min-h-screen bg-jacksons-purple text-iron">
+      <main className="flex-1">
+        <section className="w-full py-20 md:py-32 lg:py-40 xl:py-48 text-center">
+          <div className="container px-4 md:px-6">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-iron to-nepal">
+              Reabilite Pro: O Futuro da Gestão em Fisioterapia
+            </h1>
+            <p className="max-w-[600px] mx-auto mt-4 text-nepal md:text-xl">
+              Uma plataforma completa para simplificar a gestão de pacientes e avaliações, permitindo que você foque no que realmente importa: a reabilitação.
+            </p>
+            <div className="mt-8 flex justify-center gap-4">
+              <Link
+                href="/login"
+                className="inline-flex h-12 items-center justify-center rounded-md bg-royal-blue px-8 text-sm font-medium text-iron shadow-lg transition-colors hover:bg-opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue disabled:pointer-events-none disabled:opacity-50"
+              >
+                Entrar
+              </Link>
+              <Link
+                href="/signup"
+                className="inline-flex h-12 items-center justify-center rounded-md border border-nepal bg-transparent px-8 text-sm font-medium text-nepal shadow-sm transition-colors hover:bg-nepal hover:text-jacksons-purple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-nepal disabled:pointer-events-none disabled:opacity-50"
+              >
+                Cadastrar-se
+              </Link>
+            </div>
+          </div>
+        </section>
 
-      {/* Hero Section */}
-      <main className="container mx-auto px-6 pt-24 pb-32 text-center">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tighter mb-4">
-            Bem-vindo ao <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-cyan-500">ReabilitePro</span>
-          </h2>
-          <p className="text-lg md:text-xl text-slate-400 mb-10">
-            Sua jornada para a recuperação começa aqui. Conectando pacientes e
-            profissionais de saúde com tecnologia de ponta.
-          </p>
-          <Link
-            href="/signup"
-            className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out transform hover:scale-105"
-          >
-            Comece Agora
-          </Link>
-        </div>
+        <section id="features" className="w-full py-16 md:py-24 bg-jacksons-purple/80">
+          <div className="container px-4 md:px-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-iron">Funcionalidades Principais</h2>
+            <div className="grid gap-8 md:grid-cols-3">
+              <div className="flex flex-col items-center text-center p-6 rounded-lg bg-jacksons-purple/50 backdrop-blur-sm border border-nepal/30 shadow-lg">
+                <div className="p-3 rounded-full bg-royal-blue mb-4">
+                  <File className="h-8 w-8 text-iron" />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-iron">Gestão Simplificada</h3>
+                <p className="text-nepal">
+                  Organize seus pacientes e avaliações em um só lugar, com acesso rápido e fácil a todo o histórico.
+                </p>
+              </div>
+              <div className="flex flex-col items-center text-center p-6 rounded-lg bg-jacksons-purple/50 backdrop-blur-sm border border-nepal/30 shadow-lg">
+                <div className="p-3 rounded-full bg-royal-blue mb-4">
+                  <Window className="h-8 w-8 text-iron" />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-iron">Avaliações Detalhadas</h3>
+                <p className="text-nepal">
+                  Crie e acompanhe avaliações personalizadas, registrando cada etapa da evolução do seu paciente.
+                </p>
+              </div>
+              <div className="flex flex-col items-center text-center p-6 rounded-lg bg-jacksons-purple/50 backdrop-blur-sm border border-nepal/30 shadow-lg">
+                <div className="p-3 rounded-full bg-royal-blue mb-4">
+                  <Globe className="h-8 w-8 text-iron" />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-iron">Acesso Seguro e Online</h3>
+                <p className="text-nepal">
+                  Acesse seus dados de qualquer lugar, a qualquer hora, com a segurança da autenticação moderna.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
-
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-slate-950/50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tight">
-              Funcionalidades Principais
-            </h3>
-            <p className="text-slate-500 mt-2">
-              Tudo que você precisa para uma recuperação assistida por tecnologia.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Feature Card 1 */}
-            <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700/50 shadow-lg hover:border-cyan-500/50 transition-colors">
-              <div className="bg-slate-900/70 inline-flex items-center justify-center w-12 h-12 rounded-lg mb-6 border border-slate-700/50">
-                <ClipboardIcon className="w-6 h-6 text-cyan-400" />
-              </div>
-              <h4 className="text-xl font-semibold mb-2">Planos Personalizados</h4>
-              <p className="text-slate-400">
-                Receba planos de reabilitação feitos sob medida para suas
-                necessidades, criados por especialistas.
-              </p>
-            </div>
-
-            {/* Feature Card 2 */}
-            <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700/50 shadow-lg hover:border-cyan-500/50 transition-colors">
-               <div className="bg-slate-900/70 inline-flex items-center justify-center w-12 h-12 rounded-lg mb-6 border border-slate-700/50">
-                <ChartIcon className="w-6 h-6 text-cyan-400" />
-              </div>
-              <h4 className="text-xl font-semibold mb-2">
-                Acompanhamento Contínuo
-              </h4>
-              <p className="text-slate-400">
-                Monitore seu progresso com gráficos e relatórios detalhados,
-                compartilhados em tempo real com seu fisioterapeuta.
-              </p>
-            </div>
-
-            {/* Feature Card 3 */}
-            <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700/50 shadow-lg hover:border-cyan-500/50 transition-colors">
-               <div className="bg-slate-900/70 inline-flex items-center justify-center w-12 h-12 rounded-lg mb-6 border border-slate-700/50">
-                <MessageIcon className="w-6 h-6 text-cyan-400" />
-              </div>
-              <h4 className="text-xl font-semibold mb-2">Canal de Comunicação</h4>
-              <p className="text-slate-400">
-                Comunicação direta e segura com seu profissional de saúde para
-                tirar dúvidas e receber orientações.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-6 text-center">
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-              Pronto para transformar sua recuperação?
-            </h3>
-            <p className="text-lg text-slate-400 mb-8">
-              Junte-se à comunidade ReabilitePro e dê o próximo passo na sua
-              jornada de bem-estar.
-            </p>
-            <Link
-              href="/signup"
-              className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out transform hover:scale-105"
-            >
-              Cadastre-se Gratuitamente
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-800">
-        <div className="container mx-auto px-6 py-8 text-center text-slate-500">
-          <p>&copy; {new Date().getFullYear()} ReabilitePro. Todos os direitos reservados.</p>
-        </div>
-      </footer>
     </div>
   );
 }
