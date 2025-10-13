@@ -1,12 +1,14 @@
 {
-  "hosting": [
-    {
-      "source": ".",
-      "site": "reabilite-pro-efd1d",
-      "frameworksBackend": {
-        "id": "reabilite-backend",
-        "region": "us-central1"
-      }
+  "hosting": {
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "backendId": "reabilite-backend",
+      "region": "us-central1"
     }
-  ]
+  }
 }
