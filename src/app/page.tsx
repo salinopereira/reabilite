@@ -1,70 +1,49 @@
-import { File, Globe, Window } from 'lucide-react';
+import { File, Globe, AppWindow as Window } from 'lucide-react';
 import Link from 'next/link';
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-jacksons-purple text-iron">
-      <main className="flex-1">
-        <section className="w-full py-20 md:py-32 lg:py-40 xl:py-48 text-center">
-          <div className="container px-4 md:px-6">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-iron to-nepal">
-              Reabilite Pro: O Futuro da Gestão em Fisioterapia
-            </h1>
-            <p className="max-w-[600px] mx-auto mt-4 text-nepal md:text-xl">
-              Uma plataforma completa para simplificar a gestão de pacientes e avaliações, permitindo que você foque no que realmente importa: a reabilitação.
-            </p>
-            <div className="mt-8 flex justify-center gap-4">
-              <Link
-                href="/login"
-                className="inline-flex h-12 items-center justify-center rounded-md bg-royal-blue px-8 text-sm font-medium text-iron shadow-lg transition-colors hover:bg-opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue disabled:pointer-events-none disabled:opacity-50"
-              >
-                Entrar
-              </Link>
-              <Link
-                href="/signup"
-                className="inline-flex h-12 items-center justify-center rounded-md border border-nepal bg-transparent px-8 text-sm font-medium text-nepal shadow-sm transition-colors hover:bg-nepal hover:text-jacksons-purple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-nepal disabled:pointer-events-none disabled:opacity-50"
-              >
-                Cadastrar-se
-              </Link>
-            </div>
-          </div>
-        </section>
+    <div className="min-h-screen bg-jacksons-purple text-iron">
+      <header className="absolute top-0 left-0 right-0 p-8 flex justify-between items-center">
+        <div className="text-2xl font-bold">Reabilite Pro</div>
+        <nav>
+          <Link href="/login" className="bg-royal-blue text-white py-2 px-6 rounded-lg shadow-lg hover:bg-opacity-80 transition-all">
+            Acessar Plataforma
+          </Link>
+        </nav>
+      </header>
 
-        <section id="features" className="w-full py-16 md:py-24 bg-jacksons-purple/80">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-iron">Funcionalidades Principais</h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              <div className="flex flex-col items-center text-center p-6 rounded-lg bg-jacksons-purple/50 backdrop-blur-sm border border-nepal/30 shadow-lg">
-                <div className="p-3 rounded-full bg-royal-blue mb-4">
-                  <File className="h-8 w-8 text-iron" />
-                </div>
-                <h3 className="text-xl font-bold mb-2 text-iron">Gestão Simplificada</h3>
-                <p className="text-nepal">
-                  Organize seus pacientes e avaliações em um só lugar, com acesso rápido e fácil a todo o histórico.
-                </p>
-              </div>
-              <div className="flex flex-col items-center text-center p-6 rounded-lg bg-jacksons-purple/50 backdrop-blur-sm border border-nepal/30 shadow-lg">
-                <div className="p-3 rounded-full bg-royal-blue mb-4">
-                  <Window className="h-8 w-8 text-iron" />
-                </div>
-                <h3 className="text-xl font-bold mb-2 text-iron">Avaliações Detalhadas</h3>
-                <p className="text-nepal">
-                  Crie e acompanhe avaliações personalizadas, registrando cada etapa da evolução do seu paciente.
-                </p>
-              </div>
-              <div className="flex flex-col items-center text-center p-6 rounded-lg bg-jacksons-purple/50 backdrop-blur-sm border border-nepal/30 shadow-lg">
-                <div className="p-3 rounded-full bg-royal-blue mb-4">
-                  <Globe className="h-8 w-8 text-iron" />
-                </div>
-                <h3 className="text-xl font-bold mb-2 text-iron">Acesso Seguro e Online</h3>
-                <p className="text-nepal">
-                  Acesse seus dados de qualquer lugar, a qualquer hora, com a segurança da autenticação moderna.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+      <main className="container mx-auto px-8 pt-40 text-center">
+        <h1 className="text-6xl font-extrabold mb-4 leading-tight">
+          A Ferramenta Definitiva para Fisioterapeutas Modernos
+        </h1>
+        <p className="text-nepal text-xl mb-12 max-w-3xl mx-auto">
+          Gestão de pacientes, avaliações personalizadas e acompanhamento de progresso. Tudo num só lugar, com uma interface que vai adorar usar.
+        </p>
+        <Link href="/signup" className="bg-royal-blue text-white py-4 px-10 rounded-full text-lg font-semibold shadow-2xl hover:scale-105 transition-transform">
+          Comece Agora Gratuitamente
+        </Link>
       </main>
+
+      <section className="mt-32 pb-20">
+        <div className="container mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="bg-jacksons-purple/50 backdrop-blur-sm border border-nepal/30 rounded-2xl p-8 text-center shadow-lg">
+            <File className="w-16 h-16 mx-auto mb-6 text-royal-blue" />
+            <h3 className="text-2xl font-bold mb-2">Avaliações Detalhadas</h3>
+            <p className="text-nepal">Crie e personalize avaliações completas para cada paciente, registando cada detalhe do tratamento.</p>
+          </div>
+          <div className="bg-jacksons-purple/50 backdrop-blur-sm border border-nepal/30 rounded-2xl p-8 text-center shadow-lg">
+            <Globe className="w-16 h-16 mx-auto mb-6 text-royal-blue" />
+            <h3 className="text-2xl font-bold mb-2">Acesso Onde Estiver</h3>
+            <p className="text-nepal">Aceda aos dados dos seus pacientes a partir de qualquer dispositivo, de forma segura e rápida.</p>
+          </div>
+          <div className="bg-jacksons-purple/50 backdrop-blur-sm border border-nepal/30 rounded-2xl p-8 text-center shadow-lg">
+            <Window className="w-16 h-16 mx-auto mb-6 text-royal-blue" />
+            <h3 className="text-2xl font-bold mb-2">Interface Intuitiva</h3>
+            <p className="text-nepal">Uma experiência de utilização desenhada para ser eficiente, bonita e fácil de usar no dia a dia.</p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
