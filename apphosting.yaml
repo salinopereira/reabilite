@@ -3,7 +3,15 @@ run:
     - npm install
     - npm run build
   env:
+    # Client-side variables
     - variable: NEXT_PUBLIC_SUPABASE_URL
       secret: SUPABASE_URL
     - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
       secret: SUPABASE_ANON_KEY
+    # Server-side variables
+    - variable: SUPABASE_URL
+      secret: SUPABASE_URL
+    - variable: SUPABASE_ANON_KEY
+      secret: SUPABASE_ANON_KEY
+    - variable: SUPABASE_SERVICE_KEY
+      secret: SUPABASE_SERVICE_KEY

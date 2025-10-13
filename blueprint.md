@@ -1,8 +1,10 @@
-# Blueprint: ReabilitePro
+# Reabilite Pro - Blueprint de Aplicação
+
+Este documento serve como a fonte única de verdade para o projeto Reabilite Pro, detalhando sua arquitetura, design, funcionalidades e o plano de desenvolvimento atual.
 
 ## Visão Geral
 
-O ReabilitePro é uma aplicação web moderna para fisioterapeutas gerenciarem seus pacientes e o progresso clínico de forma eficiente. A plataforma permite o cadastro de profissionais, login, e gerenciamento completo de pacientes, incluindo a criação e visualização de avaliações clínicas detalhadas (SOAP).
+O Reabilite Pro é uma aplicação web moderna, projetada para fisioterapeutas gerenciarem seus pacientes e o progresso de suas avaliações de forma eficiente, segura e intuitiva.
 
 ## Design e Estilo
 
@@ -34,19 +36,25 @@ O ReabilitePro é uma aplicação web moderna para fisioterapeutas gerenciarem s
 - **Estrutura Técnica:**
   - **Next.js com App Router:** Utilização da arquitetura mais recente do Next.js.
   - **TypeScript:** Tipagem forte em todo o projeto para maior robustez.
-  - **Supabase:** Backend como serviço para autenticação e banco de dados.
+- **Supabase:** Backend como serviço para autenticação e banco de dados.
   - **TailwindCSS:** Para estilização utilitária e design system.
 
-## Resolução de Problemas de Build e Deploy
+---
 
-- **Erro de Dependências no Build (`Module not found`):**
-  - **Diagnóstico:** O processo de build do GitHub Actions falhou porque múltiplos pacotes (`lucide-react`, `geist`, `@tailwindcss/postcss`, e `autoprefixer`) não estavam listados como dependências no `package.json`.
-  - **Solução:** Instalados os pacotes necessários com `npm install`.
+## Plano de Ação Atual: Migração para @supabase/ssr
 
-- **Erro de Variáveis de Ambiente no Build:**
-  - **Diagnóstico:** O build falhava ao tentar acessar `process.env.NEXT_PUBLIC_SUPABASE_URL` e `..._ANON_KEY`, pois essas variáveis não estavam disponíveis no ambiente de build.
-  - **Solução:** O cliente Supabase foi modificado para usar valores "dummy" durante o processo de build (`process.env.CI`), evitando a falha.
+**Objetivo:** Substituir os pacotes descontinuados `@supabase/auth-helpers-*` pelo novo pacote oficial `@supabase/ssr` para garantir a compatibilidade e segurança da autenticação.
 
-## Teste do Fluxo de Deploy
+**Passos:**
 
-- Adicionando esta linha para acionar o fluxo de trabalho de deploy.
+1.  **Desinstalar dependências antigas:** Remover `@supabase/auth-helpers-nextjs` e `@supabase/auth-helpers-react`.
+2.  **Instalar nova dependência:** Adicionar `@supabase/ssr`.
+3.  **Refatorar a criação do cliente Supabase:**
+    - Criar arquivos utilitários em `src/lib/supabase/` para gerenciar a criação de clientes para:
+      - Componentes de Cliente (Client Components)
+      - Componentes de Servidor (Server Components)
+      - Middleware
+4.  **Atualizar o Middleware de Autenticação:**
+    - Substituir a lógica em `src/middleware.ts` para usar a função `updateSession` do `@supabase/ssr`.
+5.  **Refatorar Componentes e Páginas:**
+    - Atualizar todas as instâncias onde o cliente Supabase é utilizado para usar os novos métodos, garantindo que a comunicação com o backend continue funcionando de forma segura e eficiente.
