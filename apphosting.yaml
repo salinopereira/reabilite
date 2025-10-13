@@ -1,12 +1,9 @@
-build:
-  env:
-    - variable: NEXT_PUBLIC_SUPABASE_URL
-      secret: NEXT_PUBLIC_SUPABASE_URL
-    - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
-      secret: NEXT_PUBLIC_SUPABASE_ANON_KEY
 run:
+  build:
+    - npm install
+    - npm run build
   env:
     - variable: NEXT_PUBLIC_SUPABASE_URL
-      secret: NEXT_PUBLIC_SUPABASE_URL
+      secret: SUPABASE_URL
     - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
-      secret: NEXT_PUBLIC_SUPABASE_ANON_KEY
+      secret: SUPABASE_ANON_KEY

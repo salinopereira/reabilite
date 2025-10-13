@@ -1,4 +1,3 @@
-
 {
   "hosting": {
     "source": ".",
@@ -6,14 +5,9 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
-  },
-  "apphosting": {
-    "build": {
-      "env": {
-        "NEXT_PUBLIC_SUPABASE_URL": "${secret:NEXT_PUBLIC_SUPABASE_URL}",
-        "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${secret:NEXT_PUBLIC_SUPABASE_ANON_KEY}"
-      }
+    ],
+    "frameworksBackend": {
+      "id": "reabilite-backend"
     }
   }
 }
