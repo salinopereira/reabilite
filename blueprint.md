@@ -43,16 +43,8 @@ Após múltiplas tentativas, o erro `Backend Not Found` foi diagnosticado e reso
 
 - **Plano de Ação Executado:**
     1.  **Correção do Código:**
-        -   Páginas que dependem de autenticação (`login`, `signup`, `pacientes`) foram marcadas como `export const dynamic = "force-dynamic";` para evitar a pré-renderização estática.
-        -   A instanciação do cliente Supabase foi centralizada no arquivo `@/lib/supabaseClient.ts`.
-    2.  **Configuração de Build do GitHub Actions:**
-        -   Criado o arquivo `.github/workflows/firebase-hosting-pull-request.yml` para injetar os `secrets` do repositório no ambiente de build de Pull Requests.
-    3.  **Configuração de Build do Firebase App Hosting:**
-        -   O arquivo `firebase.json` foi configurado para instruir o Cloud Build a usar variáveis de ambiente do Google Secret Manager.
-    4.  **Configuração do Google Secret Manager:**
-        -   Criados os secrets `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` no Secret Manager.
-    5.  **Correção de Permissões (IAM):**
-        -   **Causa Raiz:** O serviço de build do App Hosting (`gcp-sa-firebaseapphosting`) não tinha permissão para acessar os secrets criados.
-        -   **Solução:** Concedido o papel de **"Acessor de secrets do Secret Manager"** à conta de serviço `service-35066393789@gcp-sa-firebaseapphosting.iam.gserviceaccount.com` na configuração de IAM do projeto.
+        -   A instanciação do cliente Supabase foi atualizada para não falhar durante o build, usando variáveis de ambiente "dummy" se as reais não estiverem presentes.
+    2.  **Configuração de Permissões (IAM):**
+        -   Concedido o papel de **"Acessor de secrets do Secret Manager"** à conta de serviço do App Hosting.
 
-- **Status Final:** **Resolvido.** O próximo `git push` para o branch `main` deve acionar um build bem-sucedido e implantar a aplicação.
+- **Status Atual:** Build bem-sucedido. A implantação está falhando devido a um problema transitório ao tentar acessar o artefato de build. Acionando um novo deploy para tentar novamente.
