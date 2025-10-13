@@ -1,4 +1,5 @@
 
+import Link from 'next/link';
 import type { Metadata } from 'next';
 
 // SVG Icon Components for better readability and reuse
@@ -66,12 +67,9 @@ export default function HomePage() {
           ReabilitePro
         </h1>
         <nav>
-          <a
-            href="#"
-            className="text-slate-300 hover:text-cyan-400 transition-colors"
-          >
+          <Link href="/login" className="text-slate-300 hover:text-cyan-400 transition-colors">
             Login
-          </a>
+          </Link>
         </nav>
       </header>
 
@@ -85,12 +83,12 @@ export default function HomePage() {
             Sua jornada para a recuperação começa aqui. Conectando pacientes e
             profissionais de saúde com tecnologia de ponta.
           </p>
-          <a
-            href="#"
+          <Link
+            href="/signup"
             className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out transform hover:scale-105"
           >
             Comece Agora
-          </a>
+          </Link>
         </div>
       </main>
 
@@ -159,12 +157,12 @@ export default function HomePage() {
               Junte-se à comunidade ReabilitePro e dê o próximo passo na sua
               jornada de bem-estar.
             </p>
-            <a
-              href="#"
+            <Link
+              href="/signup"
               className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out transform hover:scale-105"
             >
               Cadastre-se Gratuitamente
-            </a>
+            </Link>
           </div>
         </div>
       </section>
