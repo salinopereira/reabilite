@@ -40,8 +40,8 @@ O ReabilitePro é uma aplicação web moderna para fisioterapeutas gerenciarem s
 ## Resolução de Problemas de Build e Deploy
 
 - **Erro de Dependências no Build (`Module not found`):**
-  - **Diagnóstico:** O processo de build do GitHub Actions falhou porque os pacotes `lucide-react` (ícones) e `geist` (fontes) não estavam listados como dependências no `package.json`.
-  - **Solução:** Instalados os pacotes necessários com `npm install lucide-react geist`.
+  - **Diagnóstico:** O processo de build do GitHub Actions falhou porque os pacotes `lucide-react`, `geist`, e `@tailwindcss/postcss` não estavam listados como dependências no `package.json`.
+  - **Solução:** Instalados os pacotes necessários com `npm install`.
 
 - **Erro de Variáveis de Ambiente no Build:**
   - **Diagnóstico:** O build falhava ao tentar acessar `process.env.NEXT_PUBLIC_SUPABASE_URL` e `..._ANON_KEY`, pois essas variáveis não estavam disponíveis no ambiente de build.
