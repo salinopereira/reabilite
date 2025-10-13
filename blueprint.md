@@ -46,3 +46,7 @@ O ReabilitePro é uma aplicação web moderna para fisioterapeutas gerenciarem s
 - **Erro de Variáveis de Ambiente no Build:**
   - **Diagnóstico:** O build falhava ao tentar acessar `process.env.NEXT_PUBLIC_SUPABASE_URL` e `..._ANON_KEY`, pois essas variáveis não estavam disponíveis no ambiente de build.
   - **Solução:** O cliente Supabase foi modificado para usar valores "dummy" durante o processo de build (`process.env.CI`), evitando a falha.
+
+## Teste do Fluxo de Deploy
+
+- Adicionando esta linha para acionar o fluxo de trabalho de deploy.
