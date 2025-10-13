@@ -1,60 +1,58 @@
-# Blueprint: Fisiogest Pro
+# Blueprint: ReabilitePro
 
 ## Visão Geral
 
-O Fisiogest Pro é uma aplicação web moderna para fisioterapeutas gerenciarem seus pacientes e o progresso clínico de forma eficiente. A plataforma permite o cadastro de pacientes, o registro de avaliações detalhadas (SOAP) e o acompanhamento da evolução de cada caso, tudo em uma interface intuitiva e reativa.
+O ReabilitePro é uma aplicação web moderna para fisioterapeutas gerenciarem seus pacientes e o progresso clínico de forma eficiente. A plataforma permite o cadastro de profissionais, login, e gerenciamento completo de pacientes, incluindo a criação e visualização de avaliações clínicas detalhadas (SOAP).
 
 ## Design e Estilo
 
-- **Tema:** Escuro (Dark Mode) com um esquema de cores baseado em tons de ardósia (slate), acentuado por um ciano vibrante para ações primárias e elementos interativos.
-- **Tipografia:** Fonte sans-serif limpa e moderna para garantir legibilidade.
+- **Tema:** Escuro (Dark Mode), com uma paleta de cores baseada em tons de ardósia (slate) e acentos em ciano e verde-azulado (teal) para interatividade e destaque.
+- **Layout:** Responsivo, mobile-first, garantindo usabilidade em desktops e dispositivos móveis.
 - **Componentes:**
-  - **Cards:** Efeito de "levantado" com sombras suaves para destacar elementos como os cards de paciente.
-  - **Botões:** Botões de ação primária com cor ciano e efeito de sombra para se destacarem. Botões secundários com fundo cinza sutil.
-  - **Modais:** Experiência de modal fluida com fundo desfocado para focar a atenção do usuário na tarefa atual (adicionar/editar paciente, adicionar avaliação).
-  - **Ícones:** Uso de iconografia (Feather Icons) para ações como editar, deletar e adicionar, melhorando a usabilidade.
-- **Layout:** Responsivo e centrado, garantindo uma boa experiência tanto em desktops quanto em dispositivos móveis.
+  - **Cards:** Efeito de "levantado" com sombras suaves e bordas que reagem ao hover.
+  - **Botões:** Ações primárias em ciano vibrante com sombras sutis para criar profundidade.
+  - **Modais:** Experiência de modal fluida com fundo desfocado para focar a atenção do usuário na tarefa.
+  - **Ícones:** Uso consistente de iconografia para melhorar a compreensão das ações.
+- **Página Inicial:** Uma landing page profissional para apresentar o produto.
 
 ## Funcionalidades Implementadas
 
-- **Autenticação de Usuários:**
-  - Cadastro (`/signup`) e Login (`/login`) de profissionais utilizando o Supabase Auth.
-  - Redirecionamento automático para o dashboard após o login.
-- **Dashboard (`/dashboard`):
-  - Apresenta um resumo ou ponto de partida para o profissional (atualmente, um placeholder).
-- **Gerenciamento de Pacientes (`/pacientes`):
-  - **Listagem:** Exibe todos os pacientes cadastrados em cards individuais, mostrando nome, email e telefone.
-  - **Ações Rápidas:** Botões para editar ou deletar um paciente diretamente do card.
-  - **Adicionar Paciente:** Botão "Adicionar Paciente" que abre um formulário em um modal para o cadastro de novos pacientes.
-  - **Busca:** Funcionalidade de busca para filtrar pacientes pelo nome.
-- **Visualização de Paciente (`/pacientes/[id]`):
-  - **Detalhes do Paciente:** Exibe todas as informações de um paciente específico.
-  - **Listagem de Avaliações:** Mostra um histórico de todas as avaliações já realizadas para aquele paciente.
-  - **Adicionar Avaliação:** Botão "Nova Avaliação" que abre um modal com um formulário para registrar uma nova avaliação (SOAP).
-- **Gerenciamento de Avaliações:
-  - **Criação:** O formulário de avaliação permite registrar Título, Data, Notas Subjetivas (queixa do paciente) e Observações Objetivas (análise do profissional).
-  - **Visualização:** A página de detalhes de uma avaliação (`/pacientes/[id]/avaliacoes/[avaliacaoId]`) exibe as informações registradas.
-- **Componentes Reutilizáveis:**
-  - `Modal.tsx`: Componente de modal genérico e estilizado.
-  - `AddPatientForm.tsx`, `EditPatientForm.tsx`, `AddAvaliacaoForm.tsx`: Formulários desacoplados para cada ação específica.
-  - `AddPatientModal.tsx`, `EditPatientModal.tsx`, `AddEvaluationModal.tsx`: Componentes que gerenciam o estado de visibilidade dos modais e envolvem os formulários.
-- **Tipagem:**
-  - `src/lib/types.ts`: Arquivo central para interfaces TypeScript (ex: `Paciente`), garantindo consistência em todo o projeto.
+- **Autenticação de Usuários (Supabase Auth):**
+  - Rotas `/login` e `/signup` para cadastro e login de profissionais.
+  - Redirecionamento automático para a página de pacientes (`/pacientes`) após o login bem-sucedido.
+- **Gerenciamento de Pacientes (`/pacientes`):**
+  - Listagem de todos os pacientes em cards.
+  - Funcionalidade de busca para filtrar pacientes por nome.
+  - Ações para editar e deletar pacientes.
+  - Modal para adicionar um novo paciente.
+- **Detalhes do Paciente (`/pacientes/[id]`):**
+  - Exibição das informações do paciente.
+  - Listagem do histórico de avaliações.
+  - Modal para adicionar uma nova avaliação (formato SOAP).
+- **Detalhes da Avaliação (`/pacientes/[id]/avaliacoes/[avaliacaoId]`):**
+  - Visualização completa de uma avaliação registrada.
+- **Estrutura Técnica:**
+  - **Next.js com App Router:** Utilização da arquitetura mais recente do Next.js.
+  - **TypeScript:** Tipagem forte em todo o projeto para maior robustez.
+  - **Supabase:** Backend como serviço para autenticação e banco de dados.
+  - **TailwindCSS:** Para estilização utilitária e design system.
 
-## Plano de Ação Atual
+## Resolução de Problemas de Build e Deploy (App Hosting)
 
-- **Tarefa:** Implementar a funcionalidade de Adicionar Avaliação para um Paciente.
-- **Status:** **Concluído.**
-- **Passos Executados:**
-    1.  **Atualização da UI:** Adicionado um botão "Nova Avaliação" na página de detalhes do paciente.
-    2.  **Criação de Componentes:**
-        -   `AddEvaluationModal.tsx`: Gerencia a abertura e fechamento do modal de avaliação.
-        -   `AddAvaliacaoForm.tsx`: Contém o formulário para a criação de uma nova avaliação, com comunicação com o Supabase.
-    3.  **Refatoração:**
-        -   O componente `Modal.tsx` foi generalizado para aceitar um `title` e ser reutilizado.
-        -   `EditPatientModal.tsx` foi atualizado para usar o novo `Modal`.
-    4.  **Centralização de Tipos:** A interface `Paciente` foi movida para `src/lib/types.ts` para ser reutilizada e evitar duplicação de código.
-    5.  **Resolução de Erros:** Corrigida uma série de erros de compilação relacionados a `props` inconsistentes, erros de digitação e importações de tipos incorretas.
-    6.  **Validação:** O projeto foi compilado com sucesso (`npm run build`), confirmando que a estrutura de componentes e tipos está correta.
+Após múltiplas tentativas, o erro `Backend Not Found` foi diagnosticado e resolvido. A causa era uma cascata de problemas relacionados à disponibilidade de variáveis de ambiente (`secrets`) nos diferentes ambientes de build.
 
-# Forçando novo build
+- **Plano de Ação Executado:**
+    1.  **Correção do Código:**
+        -   Páginas que dependem de autenticação (`login`, `signup`, `pacientes`) foram marcadas como `export const dynamic = "force-dynamic";` para evitar a pré-renderização estática.
+        -   A instanciação do cliente Supabase foi centralizada no arquivo `@/lib/supabaseClient.ts`.
+    2.  **Configuração de Build do GitHub Actions:**
+        -   Criado o arquivo `.github/workflows/firebase-hosting-pull-request.yml` para injetar os `secrets` do repositório no ambiente de build de Pull Requests.
+    3.  **Configuração de Build do Firebase App Hosting:**
+        -   O arquivo `firebase.json` foi configurado para instruir o Cloud Build a usar variáveis de ambiente do Google Secret Manager.
+    4.  **Configuração do Google Secret Manager:**
+        -   Criados os secrets `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` no Secret Manager.
+    5.  **Correção de Permissões (IAM):**
+        -   **Causa Raiz:** O serviço de build do App Hosting (`gcp-sa-firebaseapphosting`) não tinha permissão para acessar os secrets criados.
+        -   **Solução:** Concedido o papel de **"Acessor de secrets do Secret Manager"** à conta de serviço `service-35066393789@gcp-sa-firebaseapphosting.iam.gserviceaccount.com` na configuração de IAM do projeto.
+
+- **Status Final:** **Resolvido.** O próximo `git push` para o branch `main` deve acionar um build bem-sucedido e implantar a aplicação.
