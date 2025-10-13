@@ -1,19 +1,11 @@
-
 {
-  "hosting": {
-    "source": ".",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  },
-  "apphosting": {
-    "build": {
-      "env": {
-        "NEXT_PUBLIC_SUPABASE_URL": "${secret:NEXT_PUBLIC_SUPABASE_URL}",
-        "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${secret:NEXT_PUBLIC_SUPABASE_ANON_KEY}"
+  "hosting": [
+    {
+      "site": "reabilite-pro-efd1d",
+      "source": ".",
+      "frameworksBackend": {
+        "region": "us-central1"
       }
     }
-  }
+  ]
 }

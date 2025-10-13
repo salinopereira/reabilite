@@ -2,7 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --foreground-rgb: 213, 213, 214; /* iron */
+  --background-start-rgb: 28, 43, 122; /* jacksons-purple */
+  --background-end-rgb: 28, 43, 122; /* jacksons-purple */
+  --noise-opacity: 0.02;
+}
+
 body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color: rgb(var(--foreground-rgb));
+  background-color: rgb(var(--background-start-rgb));
+  position: relative;
+  min-height: 100vh;
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiGAAABCFBMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Hash/dualAAAAWHRSTlMAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAiJCUnKCkqKywtLi8wMTIzNDU2Nzg5Ojs8PT5AQUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVpbXF1eX2C2kLgAAAABYktHREjw1ORoAAAAy0lEQVRIx+3WwQ7CIBAF0K99qS5cuLLL3e52d3f3/v+Xk5Q6hJJS2fghfN/vTxzQ2A39eJ/2rT5/HQ7uPz3+p8E8/gM88j8I880/gWeeR3s3f0Pz3T+B55l/geb5HwTz/B/ADPM/gEf+V/A8/1Pgv/4X8A/z/8B/vVfwD/P/wH++V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP8//Acz4A/z/8B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1X8A/z38B/PVfwD/PfwH89V/AP89/Afz1axb3nU/2AAAAAElFTkSuQmCC');
+  background-repeat: repeat;
+  opacity: var(--noise-opacity);
+  z-index: -1; /* Coloca o ruído atrás do conteúdo */
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }
