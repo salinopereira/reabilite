@@ -37,14 +37,12 @@ O ReabilitePro é uma aplicação web moderna para fisioterapeutas gerenciarem s
   - **Supabase:** Backend como serviço para autenticação e banco de dados.
   - **TailwindCSS:** Para estilização utilitária e design system.
 
-## Resolução de Problemas de Build e Deploy (App Hosting)
+## Resolução de Problemas de Build e Deploy
 
-Após múltiplas tentativas, o erro `Backend Not Found` foi diagnosticado e resolvido. A causa era uma cascata de problemas relacionados à disponibilidade de variáveis de ambiente (`secrets`) nos diferentes ambientes de build.
+- **Erro de Dependências no Build (`Module not found`):**
+  - **Diagnóstico:** O processo de build do GitHub Actions falhou porque os pacotes `lucide-react` (ícones) e `geist` (fontes) não estavam listados como dependências no `package.json`.
+  - **Solução:** Instalados os pacotes necessários com `npm install lucide-react geist`.
 
-- **Plano de Ação Executado:**
-    1.  **Correção do Código:**
-        -   A instanciação do cliente Supabase foi atualizada para não falhar durante o build, usando variáveis de ambiente "dummy" se as reais não estiverem presentes.
-    2.  **Configuração de Permissões (IAM):**
-        -   Concedido o papel de **"Acessor de secrets do Secret Manager"** à conta de serviço do App Hosting.
-
-- **Status Atual:** Build bem-sucedido. A implantação está falhando devido a um problema transitório ao tentar acessar o artefato de build. Acionando um novo deploy para tentar novamente.
+- **Erro de Variáveis de Ambiente no Build:**
+  - **Diagnóstico:** O build falhava ao tentar acessar `process.env.NEXT_PUBLIC_SUPABASE_URL` e `..._ANON_KEY`, pois essas variáveis não estavam disponíveis no ambiente de build.
+  - **Solução:** O cliente Supabase foi modificado para usar valores "dummy" durante o processo de build (`process.env.CI`), evitando a falha.
