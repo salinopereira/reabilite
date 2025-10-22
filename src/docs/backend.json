@@ -1,0 +1,131 @@
+{
+  "entities": {
+    "Patient": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Patient",
+      "type": "object",
+      "description": "Represents a patient using the Reabilite platform.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the Patient entity." },
+        "name": { "type": "string", "description": "The patient's full name." },
+        "email": { "type": "string", "description": "The patient's email address.", "format": "email" },
+        "location": { "type": "string", "description": "The patient's location (e.g., city, state)." },
+        "healthHistory": { "type": "string", "description": "The comprehensive health history of the patient, editable by professionals." },
+        "preferences": { "type": "string", "description": "Patient's preferences for consultations (online/in-person, specialization)." },
+        "role": { "type": "string", "description": "The user role, always 'patient' for this entity." },
+        "dob": { "type": "string", "format": "date", "description": "Patient's date of birth." },
+        "phone": { "type": "string", "description": "Patient's phone number." }
+      },
+      "required": ["id", "name", "email", "location", "role"]
+    },
+    "Professional": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Professional",
+      "type": "object",
+      "description": "Represents a healthcare professional on the Reabilite platform.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the Professional entity." },
+        "name": { "type": "string", "description": "The professional's full name." },
+        "email": { "type": "string", "description": "The professional's email address.", "format": "email" },
+        "crnCrefCrp": { "type": "string", "description": "The professional's CRN/CRP/CREF number." },
+        "areaOfExpertise": { "type": "string", "description": "The professional's area of expertise." },
+        "consultationFee": { "type": "number", "description": "The professional's consultation fee." },
+        "availability": { "type": "string", "description": "The professional's availability schedule." },
+        "serviceMode": { "type": "string", "description": "The professional's service mode (online/in-person)." },
+        "bio": { "type": "string", "description": "A short biography of the professional." },
+        "role": { "type": "string", "description": "The user role, always 'professional' for this entity." }
+      },
+      "required": ["id", "name", "email", "crnCrefCrp", "areaOfExpertise", "role"]
+    },
+    "Appointment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Appointment",
+      "type": "object",
+      "description": "Represents an appointment scheduled between a patient and a professional.",
+      "properties": {
+        "patientId": { "type": "string", "description": "Reference to Patient." },
+        "professionalId": { "type": "string", "description": "Reference to Professional." },
+        "dateTime": { "type": "string", "description": "The date and time of the appointment.", "format": "date-time" },
+        "status": {
+          "type": "string",
+          "description": "The status of the appointment.",
+          "enum": ["scheduled", "confirmed", "completed", "cancelled"]
+        },
+        "notes": { "type": "string", "description": "Any notes or comments related to the appointment." }
+      },
+      "required": ["patientId", "professionalId", "dateTime", "status"]
+    },
+    "CommunityPost": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CommunityPost",
+      "type": "object",
+      "description": "Represents a post in the community forum.",
+      "properties": {
+        "authorId": { "type": "string", "description": "Reference to Patient or Professional." },
+        "postDate": { "type": "string", "description": "The date when the post was created.", "format": "date-time" },
+        "content": { "type": "string", "description": "The content of the post." }
+      },
+      "required": ["authorId", "postDate", "content"]
+    },
+    "ChatMessage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ChatMessage",
+      "type": "object",
+      "description": "Represents a single message within a chat conversation.",
+      "properties": {
+        "conversationId": { "type": "string", "description": "Identifier for the chat conversation." },
+        "senderId": { "type": "string", "description": "The UID of the user who sent the message." },
+        "receiverId": { "type": "string", "description": "The UID of the user who received the message." },
+        "text": { "type": "string", "description": "The content of the message." },
+        "timestamp": { "type": "string", "format": "date-time", "description": "When the message was sent." }
+      },
+      "required": ["conversationId", "senderId", "receiverId", "text", "timestamp"]
+    },
+    "Transaction": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Transaction",
+      "type": "object",
+      "description": "Represents a financial transaction for a consultation.",
+      "properties": {
+        "appointmentId": { "type": "string", "description": "Reference to the Appointment." },
+        "patientId": { "type": "string", "description": "Reference to the Patient who paid." },
+        "professionalId": { "type": "string", "description": "Reference to the Professional who received payment." },
+        "amount": { "type": "number", "description": "Gross amount of the transaction." },
+        "platformFee": { "type": "number", "description": "The fee retained by the platform." },
+        "netAmount": { "type": "number", "description": "The net amount paid to the professional." },
+        "status": { "type": "string", "description": "Status of the transaction (e.g., pending, completed, failed)." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of the transaction." }
+      },
+      "required": ["appointmentId", "patientId", "professionalId", "amount", "status", "createdAt"]
+    }
+  },
+  "auth": {
+    "providers": ["password", "anonymous"]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/Patient" },
+      "description": "Stores patient profiles. The document ID {userId} must match the authenticated user's UID."
+    },
+    "/professionals/{professionalId}": {
+      "schema": { "$ref": "#/entities/Professional" },
+      "description": "Stores professional profiles. The document ID {professionalId} must match the authenticated user's UID."
+    },
+    "/appointments/{appointmentId}": {
+      "schema": { "$ref": "#/entities/Appointment" },
+      "description": "Stores appointment data. Access is granted if the authenticated user's UID matches either the patientId or professionalId field."
+    },
+    "/communityPosts/{communityPostId}": {
+      "schema": { "$ref": "#/entities/CommunityPost" },
+      "description": "Stores community posts. Write access is granted if the authorId matches the user's UID."
+    },
+    "/chatMessages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Stores individual chat messages. Access is restricted to sender or receiver."
+    },
+    "/transactions/{transactionId}": {
+      "schema": { "$ref": "#/entities/Transaction" },
+      "description": "Stores financial transaction records. Access is restricted."
+    }
+  }
+}

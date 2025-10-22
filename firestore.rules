@@ -1,0 +1,98 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /patients/{patientId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+      allow get: if isOwner(patientId);
+      allow list: if false;
+      allow create: if isOwner(patientId) && request.resource.data.id == patientId;
+      allow update: if isExistingOwner(patientId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(patientId);
+    }
+
+    match /professionals/{professionalId} {
+      function isOwner(professionalId) {
+        return request.auth != null && request.auth.uid == professionalId;
+      }
+      function isExistingOwner(professionalId) {
+        return isOwner(professionalId) && resource != null;
+      }
+      allow get: if isOwner(professionalId);
+      allow list: if false;
+      allow create: if isOwner(professionalId) && request.resource.data.id == professionalId;
+      allow update: if isExistingOwner(professionalId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(professionalId);
+    }
+
+    match /appointments/{appointmentId} {
+      allow create: if request.auth.uid == request.resource.data.patientId || request.auth.uid == request.resource.data.professionalId;
+      allow read, update, delete: if request.auth.uid == resource.data.patientId || request.auth.uid == resource.data.professionalId;
+    }
+
+    match /healthRecords/{healthRecordId} {
+      allow create: if request.auth.uid == request.resource.data.patientId || request.auth.uid == request.resource.data.professionalId;
+      allow read, update, delete: if request.auth.uid == resource.data.patientId || request.auth.uid == resource.data.professionalId;
+    }
+
+    match /communityPosts/{communityPostId} {
+      function isOwner(authorId) {
+        return request.auth != null && request.auth.uid == authorId;
+      }
+      function isExistingOwner(authorId) {
+        return isOwner(authorId) && resource != null;
+      }
+      allow get: if true;
+      allow list: if true;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.authorId;
+      allow update: if isExistingOwner(resource.data.authorId);
+      allow delete: if isExistingOwner(resource.data.authorId);
+    }
+
+    // Admin function using Custom Claims
+    function isAdmin() {
+      return request.auth.token.admin == true;
+    }
+
+    match /chat/{conversationId} {
+      function isParticipant() {
+        return request.auth.uid in conversationId.split('_');
+      }
+      allow read, write: if request.auth != null && (isParticipant() || isAdmin());
+
+      match /messages/{messageId} {
+        allow read, write: if request.auth != null && (isParticipant() || isAdmin());
+        allow create: if request.auth != null && isParticipant() && request.resource.data.authorId == request.auth.uid;
+        allow update: if resource.data.authorId == request.auth.uid;
+        allow delete: if resource.data.authorId == request.auth.uid || isAdmin();
+      }
+    }
+
+    match /payments/{paymentId} {
+      function isPatient() {
+        return request.auth.uid == resource.data.patientId;
+      }
+      function isProfessional() {
+        return request.auth.uid == resource.data.professionalId;
+      }
+      allow create: if isPatient();
+      allow read: if isPatient() || isProfessional() || isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
+    match /plans/{planId} {
+      allow create: if request.auth.uid == request.resource.data.professionalId || isAdmin();
+      allow read, update: if request.auth.uid == resource.data.patientId || request.auth.uid == resource.data.professionalId || isAdmin();
+      allow delete: if request.auth.uid == request.resource.data.professionalId || isAdmin();
+    }
+
+    match /analytics/{metricId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

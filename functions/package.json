@@ -1,0 +1,13 @@
+{
+  "name": "reabilite-functions",
+  "version": "1.0.0",
+  "description": "Cloud Functions for the Reabilite project.",
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.1.1",
+    "firebase-functions": "^5.0.1"
+  },
+  "scripts": {
+    "set-admin": "node set-admin-claim.js"
+  }
+}

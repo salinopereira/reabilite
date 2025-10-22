@@ -1,0 +1,249 @@
+{
+  "entities": {
+    "Patient": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Patient",
+      "type": "object",
+      "description": "Represents a patient using the Reabilite platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Patient entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The patient's full name."
+        },
+        "email": {
+          "type": "string",
+          "description": "The patient's email address.",
+          "format": "email"
+        },
+        "location": {
+          "type": "string",
+          "description": "The patient's location (e.g., city, state)."
+        },
+        "healthInformation": {
+          "type": "string",
+          "description": "Basic health information provided by the patient."
+        },
+        "preferences": {
+          "type": "string",
+          "description": "Patient's preferences for consultations (online/in-person, specialization)."
+        },
+        "role": {
+          "type": "string",
+          "description": "The user role, always 'patient' for this entity."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "email",
+        "location",
+        "role"
+      ]
+    },
+    "Professional": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Professional",
+      "type": "object",
+      "description": "Represents a healthcare professional (nutritionist, psychologist, or physical educator) on the Reabilite platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Professional entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The professional's full name."
+        },
+        "email": {
+          "type": "string",
+          "description": "The professional's email address.",
+          "format": "email"
+        },
+        "crnCrefCrp": {
+          "type": "string",
+          "description": "The professional's CRN/CRP/CREF number."
+        },
+        "areaOfExpertise": {
+          "type": "string",
+          "description": "The professional's area of expertise (e.g., nutrition, psychology, physical education)."
+        },
+        "consultationFee": {
+          "type": "number",
+          "description": "The professional's consultation fee."
+        },
+        "availability": {
+          "type": "string",
+          "description": "The professional's availability schedule."
+        },
+        "serviceMode": {
+          "type": "string",
+          "description": "The professional's service mode (online/in-person)."
+        },
+        "bio": {
+          "type": "string",
+          "description": "A short biography of the professional."
+        },
+        "role": {
+          "type": "string",
+          "description": "The user role, always 'professional' for this entity."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "email",
+        "crnCrefCrp",
+        "areaOfExpertise",
+        "role"
+      ]
+    },
+    "Appointment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Appointment",
+      "type": "object",
+      "description": "Represents an appointment scheduled between a patient and a professional.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Appointment entity."
+        },
+        "patientId": {
+          "type": "string",
+          "description": "Reference to Patient. (Relationship: Patient 1:N Appointment)"
+        },
+        "professionalId": {
+          "type": "string",
+          "description": "Reference to Professional. (Relationship: Professional 1:N Appointment)"
+        },
+        "dateTime": {
+          "type": "string",
+          "description": "The date and time of the appointment.",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the appointment (e.g., scheduled, confirmed, completed, cancelled)."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Any notes or comments related to the appointment."
+        }
+      },
+      "required": [
+        "id",
+        "patientId",
+        "professionalId",
+        "dateTime",
+        "status"
+      ]
+    },
+    "HealthRecord": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "HealthRecord",
+      "type": "object",
+      "description": "Represents a patient's health record, including medical history and consultation notes.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the HealthRecord entity."
+        },
+        "patientId": {
+          "type": "string",
+          "description": "Reference to Patient. (Relationship: Patient 1:1 HealthRecord)"
+        },
+        "professionalId": {
+          "type": "string",
+          "description": "Reference to Professional. (Relationship: Professional 1:N HealthRecord)"
+        },
+        "recordDate": {
+          "type": "string",
+          "description": "The date when the health record was created or updated.",
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Notes and observations about the patient's health."
+        }
+      },
+      "required": [
+        "id",
+        "patientId",
+        "professionalId",
+        "recordDate"
+      ]
+    },
+    "CommunityPost": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CommunityPost",
+      "type": "object",
+      "description": "Represents a post in the community forum.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CommunityPost entity."
+        },
+        "authorId": {
+          "type": "string",
+          "description": "Reference to Patient or Professional. (Relationship: Patient/Professional 1:N CommunityPost)"
+        },
+        "postDate": {
+          "type": "string",
+          "description": "The date when the post was created.",
+          "format": "date-time"
+        },
+        "content": {
+          "type": "string",
+          "description": "The content of the post."
+        }
+      },
+      "required": [
+        "id",
+        "authorId",
+        "postDate",
+        "content"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/Patient"
+      },
+      "description": "Stores patient profiles. The document ID {userId} must match the authenticated user's UID."
+    },
+    "/professionals/{professionalId}": {
+      "schema": {
+        "$ref": "#/entities/Professional"
+      },
+      "description": "Stores professional profiles. The document ID {professionalId} must match the authenticated user's UID."
+    },
+    "/appointments/{appointmentId}": {
+      "schema": {
+        "$ref": "#/entities/Appointment"
+      },
+      "description": "Stores appointment data. Access is granted if the authenticated user's UID matches either the patientId or professionalId field in the document."
+    },
+    "/healthRecords/{healthRecordId}": {
+      "schema": {
+        "$ref": "#/entities/HealthRecord"
+      },
+      "description": "Stores health records. Access is controlled via the patientId and professionalId fields within the document."
+    },
+    "/communityPosts/{communityPostId}": {
+      "schema": {
+        "$ref": "#/entities/CommunityPost"
+      },
+      "description": "Stores community posts. Write access is granted if the authorId matches the authenticated user's UID. Read access is public."
+    }
+  }
+}
